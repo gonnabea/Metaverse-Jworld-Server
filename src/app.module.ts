@@ -9,14 +9,10 @@ import { UsersModule } from './users/users.module';
 import { WebsocketModule } from './websocket/websocket.module';
 import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
+import User from './users/entities/user.entity';
 
 @Module({
   imports: [
-    GraphQLModule.forRoot({
-      autoSchemaFile: true,
-      debug: true,
-      playground: true,
-    }),
     // 환경변수 설정
     ConfigModule.forRoot({
       isGlobal: true,
@@ -29,21 +25,25 @@ import * as Joi from 'joi';
         DB_PASSWORD: Joi.string().required(),
         DB_DATABASE: Joi.string().required(),
       }),
-    
     }),
-    AuthModule,
-    UsersModule,
-    WebsocketModule,
+    GraphQLModule.forRoot({
+      autoSchemaFile: true,
+      debug: true,
+      playground: true,
+    }),
     TypeOrmModule.forRoot({
+      synchronize: process.env.NODE_ENV !== 'prod',
       type: 'postgres',
       host: process.env.DB_HOST,
       port: parseInt(process.env.DB_PORT),
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      entities: [],
-      synchronize: true,
-    })
+      entities: [User],
+    }),
+    UsersModule,
+    AuthModule,
+    WebsocketModule,
   ],
   controllers: [],
   providers: [FooResolver, AppService]

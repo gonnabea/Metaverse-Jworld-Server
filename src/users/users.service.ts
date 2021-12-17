@@ -1,11 +1,23 @@
 import { Injectable } from '@nestjs/common';
-import { JoinDto, User } from 'types/User';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from "typeorm";
+import User from './entities/user.entity';
+
 
 @Injectable()
 export class UsersService {
-    
-    async create({email, nickname, password}: JoinDto): Promise<User | undefined> {
-        // return this.users.create
-        return undefined;
+    constructor(
+        @InjectRepository(User) private readonly users: Repository<User>,
+    ) {}
+
+    async join({email}) {
+        try{
+            const user = this.users.findOne({email});
+
+            return user;
+        }
+        catch(err) {
+            console.log(err)
+        }
     }
 }

@@ -32,6 +32,7 @@
     "@nestjs/typeorm": "^8.0.2",
     "@nestjs/websockets": "^8.2.3",
     "apollo-server-express": "^3.3.0",
+    "class-validator": "^0.13.2",
     "graphql": "^15.6.1",
     "joi": "^17.5.0",
     "mysql": "^2.18.1",

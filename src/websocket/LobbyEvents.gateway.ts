@@ -5,7 +5,7 @@ import {
   WebSocketGateway,
   WebSocketServer,
 } from '@nestjs/websockets';
-import { wsClient, wsRoom } from 'types/wsTypes';
+import { wsClient, wsRoom } from 'src/websocket/types/wsTypes';
 import { Server as wsServer, WebSocket } from 'ws';
 import { v4 as uuidv4 } from 'uuid';
 import { Socket } from 'socket.io';

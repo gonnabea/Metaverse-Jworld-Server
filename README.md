@@ -9,7 +9,7 @@
 - [x] TypeScript
 - [ ] GraphQL
 - [ ] REST API
-- [ ] DB (MySQL or Cassandra, etc..)
+- [x] DB (MySQL or Cassandra, etc..)
 - [x] Websocket
 - [ ] WebRTC
 - [ ] Mediasoup (WebRTC SFU Media Server)

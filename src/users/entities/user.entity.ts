@@ -5,7 +5,7 @@ import { IsEmail } from 'class-validator';
 
 @ObjectType()
 @Entity()
-class User extends CoreEntity {
+export class User extends CoreEntity {
 
   @Column('text')
   @Field(type => String)
@@ -25,4 +25,3 @@ class User extends CoreEntity {
   friends: User[];
 }
 
-export default User

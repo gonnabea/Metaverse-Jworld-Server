@@ -7,7 +7,7 @@ import { CoreOutput } from 'src/common/dtos/output.dto';
 
 
 @InputType()
-export class JoinInput extends OmitType(User, ['friends']) {
+export class JoinInput extends PickType(User, ['email', 'password', 'nickname']) {
 
   @Column()
   @Field(type => String)

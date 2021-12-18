@@ -16,8 +16,8 @@ export class UsersService {
 
     async join({ email, nickname, password, password2 }:JoinInput ):Promise<JoinOutput> {
         try{
-            const user = this.users.findOne({ email });
-
+            const user = await this.users.findOne({ email });
+            
             if(user) {
                 return {
                     ok: false,
@@ -25,13 +25,32 @@ export class UsersService {
                 }
             }
 
-            return {
-                ok: true,
-                
+            if(password === password2) {
+                const newUser = this.users.create({
+                    email,
+                    nickname,
+                    password
+                })  
+
+                this.users.save(newUser);
+
+                return {
+                    ok: true
+                }
             }
+            else {
+                return {
+                    ok: false,
+                    error: "패스워드가 일치하지 않습니다."
+                }
+            }
+
         }
-        catch(err) {
-            console.log(err)
+        catch(error) {
+            return {
+                ok: false,
+                error
+            }
         }
     }
 

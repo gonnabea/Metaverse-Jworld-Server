@@ -1,8 +1,9 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, InputType, ObjectType } from '@nestjs/graphql';
 import { CoreEntity } from 'src/common/entities/core.entity';
 import { Entity, Column, ManyToMany } from 'typeorm';
 import { IsEmail } from 'class-validator';
 
+@InputType('userInputType')
 @ObjectType()
 @Entity()
 export class User extends CoreEntity {

@@ -1,7 +1,8 @@
-import { UseGuards, Request } from '@nestjs/common';
+import { UseGuards, Request, Body } from '@nestjs/common';
 import { Mutation, Query, Resolver } from '@nestjs/graphql';
 import { AuthGuard } from '@nestjs/passport';
 import { LocalAuthGuard } from './auth/local-auth.guard';
+import { LoginOutput } from './users/dtos/login.dto';
 
 @Resolver()
 export class FooResolver {
@@ -10,9 +11,9 @@ export class FooResolver {
     return 'Hello World!';
   }
 
-  @UseGuards(LocalAuthGuard)
-  @Mutation('/login')
-  async login(@Request() req) {
-    return req.user;
-  }
+  // @UseGuards(LocalAuthGuard)
+  // @Mutation(returns => LoginOutput)
+  // async login(@Body('input') input ) {
+  //   return 
+  // }
 }

@@ -7,9 +7,9 @@
 
 - [x] Nest.js
 - [x] TypeScript
-- [ ] GraphQL
+- [x] GraphQL
 - [ ] REST API
-- [x] DB (MySQL or Cassandra, etc..)
+- [x] DB (PostgresQL or Cassandra, etc..)
 - [x] Websocket
 - [ ] WebRTC
 - [ ] Mediasoup (WebRTC SFU Media Server)

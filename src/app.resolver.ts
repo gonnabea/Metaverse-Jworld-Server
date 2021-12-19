@@ -1,19 +1,23 @@
 import { UseGuards, Request, Body } from '@nestjs/common';
-import { Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { AuthGuard } from '@nestjs/passport';
+import { AppService } from './app.service';
+import { AuthService } from './auth/auth.service';
 import { LocalAuthGuard } from './auth/local-auth.guard';
-import { LoginOutput } from './users/dtos/login.dto';
+import { JoinInput, JoinOutput } from './users/dtos/join.dto';
+import { LoginInput, LoginOutput } from './auth/dtos/login.dto';
 
 @Resolver()
-export class FooResolver {
+export class AppResolver {
+
+  constructor(
+    private appServeice: AppService,
+    private authService: AuthService
+) {}
+
   @Query(() => String)
   sayHello(): string {
     return 'Hello World!';
   }
 
-  // @UseGuards(LocalAuthGuard)
-  // @Mutation(returns => LoginOutput)
-  // async login(@Body('input') input ) {
-  //   return 
-  // }
 }

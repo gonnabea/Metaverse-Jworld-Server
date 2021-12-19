@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
-import { FooResolver } from './app.resolver';
+import { AppResolver } from './app.resolver';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
@@ -42,11 +42,12 @@ import { User } from './users/entities/user.entity';
       database: process.env.DB_DATABASE,
       entities: [User],
     }),
-    UsersModule,
+    TypeOrmModule.forFeature([User]),
     AuthModule,
+    UsersModule,
     WebsocketModule,
   ],
   controllers: [],
-  providers: [FooResolver, AppService]
+  providers: [AppResolver, AppService]
 })
 export class AppModule {}

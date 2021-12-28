@@ -5,7 +5,8 @@ import { Repository } from "typeorm";
 import { JoinInput, JoinOutput } from './dtos/join.dto';
 import { LoginOutput } from '../auth/dtos/login.dto';
 import { User } from './entities/user.entity';
-import bcrypt from 'bcrypt'
+import * as bcrypt from 'bcrypt';
+
 
 
 
@@ -46,12 +47,14 @@ export class UsersService {
             }
     
             if(password === password2) {
+                console.log("패스워드 일치")
+                
                 const newUser = this.userRepository.create({
                     email,
                     nickname,
-                    password: await bcrypt.hash(password, process.env.BCRYPT_SALT_OR_ROUNDS)
+                    password: await bcrypt.hash(password, parseInt(process.env.BCRYPT_SALT_OR_ROUNDS))
                 });  
-    
+                
                 this.userRepository.save(newUser);
     
                 return {

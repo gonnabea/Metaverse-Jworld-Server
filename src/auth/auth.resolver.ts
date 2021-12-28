@@ -1,4 +1,4 @@
-import { Query, UseGuards } from '@nestjs/common';
+import { Query, Request, UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { CoreOutput } from 'src/common/dtos/output.dto';
 import { LoginInput, LoginOutput } from 'src/auth/dtos/login.dto';
@@ -12,11 +12,10 @@ export class AuthResolver {
 
     constructor(private authService: AuthService) {}
 
-    @UseGuards(GqlAuthGuard)
+    @UseGuards(LocalAuthGuard)
     @Mutation(returns => LoginOutput)
-    async login(@Args('input') loginInput: LoginInput ):Promise<LoginOutput> {
-        console.log(loginInput)
-        return await this.authService.login(loginInput)
+    async login(@Request() req):Promise<LoginOutput> {
+        return await this.authService.login(req.user)
     }
 
     // @UseGuards(JwtAuthGuard)

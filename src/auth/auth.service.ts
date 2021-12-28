@@ -1,19 +1,21 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { CoreOutput } from 'src/common/dtos/output.dto';
-import bcrypt from 'bcrypt'
+import * as bcrypt from 'bcrypt'
 import { ValidateOutput } from './dtos/validate.dto';
 import { User } from 'src/users/entities/user.entity';
 import { Repository } from "typeorm";
-import { LoginOutput } from './dtos/login.dto';
+import { LoginInput, LoginOutput } from './dtos/login.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class AuthService {
   constructor(
       @InjectRepository(User) private readonly userRepository: Repository<User>,
-      private jwtService: JwtService
+      private jwtService: JwtService,
+      // private logger: Logger,
+
       ) {}
 
   async validateUser(email: string, password: string): Promise<any> {
@@ -43,14 +45,28 @@ export class AuthService {
     
   }
 
-  async login(user: any):Promise<LoginOutput> {
-    const payload = { username: user.email, sub: user.id };
-    return {
-      ok: true,
-      access_token: this.jwtService.sign(payload),
-    };
+  
+  async login({email, password}:LoginInput):Promise<String> {
+
+    const user = await this.userRepository.findOne({email});
+    const checkPassword = await bcrypt.compare(password, user.password)
+    console.log(checkPassword)
+
+    if(user && checkPassword) {
+      const { ...result } = user;
+      console.log('validateUser Result: ', result)
+      // this.logger.log('validateUser Result: ', result);
+      const payload = { username: user.email, sub: user.id };
+  
+      return this.jwtService.sign(payload)
+    }
+    
+    return "로그인 실패"
+
+    
+  
   }
 
-  
 
 }
+

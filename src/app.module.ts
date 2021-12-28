@@ -31,6 +31,14 @@ import { User } from './users/entities/user.entity';
       autoSchemaFile: true,
       debug: true,
       playground: true,
+      context: ({ req, connection }) => {
+        if(req) {
+          const user = req.headers.authorization;
+          return { ...req, user };
+        } else {
+          return connection;
+        }
+      }
     }),
     TypeOrmModule.forRoot({
       synchronize: process.env.NODE_ENV !== 'prod',

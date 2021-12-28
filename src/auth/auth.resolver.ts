@@ -19,17 +19,25 @@ export class AuthResolver {
     }
 
     
-    @Query(() => String)
-    async login(@Args('input') loginInput: LoginInput):Promise<String | Boolean> {
+    @Query(() => LoginOutput)
+    async login(@Args('input') loginInput: LoginInput):Promise<LoginOutput> {
         try {
         
-            const token = this.authService.login(loginInput);
+            const token = await this.authService.login(loginInput);
       
-            return token;
+            if(token){
+                return {
+                    ok: true,
+                    token
+                }
+            }
           } catch (e) {
             // this.logger.error(e);
             console.log(e)
-            return false;
+            return {
+                ok: false,
+                error: "로그인에 실패하였습니다."
+            }
           }
     }
 

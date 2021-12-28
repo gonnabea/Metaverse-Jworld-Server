@@ -15,6 +15,6 @@ export class LoginInput extends PickType(User, ['email', 'password']) {
 export class LoginOutput extends CoreOutput {
 
     @Column()
-    @Field(type => String)
-    access_token: any
+    @Field(type => String, {nullable: true})
+    token?: string
 }

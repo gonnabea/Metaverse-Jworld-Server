@@ -11,6 +11,7 @@
 - [ ] REST API
 - [x] DB (PostgresQL or Cassandra, etc..)
 - [x] Websocket
+- [x] JWT Login
 - [ ] WebRTC
 - [ ] Mediasoup (WebRTC SFU Media Server)
 - [ ] AWS or Oracle Cloud Free Tier or etc..
@@ -25,9 +26,9 @@
 
 - 공통
 
-- [ ] 친구맺기
 - [x] 전체 채팅
 - [x] 회원가입 / 로그인 구현
+- [ ] 친구맺기
 
 
 - 로비

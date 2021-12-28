@@ -46,7 +46,7 @@ export class AuthService {
   }
 
   
-  async login({email, password}:LoginInput):Promise<String> {
+  async login({email, password}:LoginInput):Promise<string | null> {
 
     const user = await this.userRepository.findOne({email});
     const checkPassword = await bcrypt.compare(password, user.password)
@@ -61,7 +61,7 @@ export class AuthService {
       return this.jwtService.sign(payload)
     }
     
-    return "로그인 실패"
+    return null
 
     
   

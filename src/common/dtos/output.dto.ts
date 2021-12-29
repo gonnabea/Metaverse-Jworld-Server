@@ -7,4 +7,7 @@ export class CoreOutput {
 
     @Field(type => Boolean)
     ok: boolean;
+
+    @Field(type => Number, {nullable: true})
+    status?: number;
 }

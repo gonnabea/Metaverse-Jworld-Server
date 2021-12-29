@@ -6,7 +6,7 @@ import { JoinInput, JoinOutput } from './dtos/join.dto';
 import { LoginOutput } from '../auth/dtos/login.dto';
 import { User } from './entities/user.entity';
 import * as bcrypt from 'bcrypt';
-
+import { GetMeOutput } from './dtos/getMe.dto';
 
 
 
@@ -45,6 +45,13 @@ export class UsersService {
                     error: "해당 이메일로 이미 가입된 유저가 있습니다."
                 }
             }
+
+            if(user) {
+                return {
+                    ok: false,
+                    error: "해당 닉네임의 유저가 이미 있습니다."
+                }
+            }
     
             if(password === password2) {
                 console.log("패스워드 일치")
@@ -76,4 +83,34 @@ export class UsersService {
             }
         }
     }
+
+    async getMe({id, email}: User) {
+        try{
+           
+            const user = await this.userRepository.findOne(id)
+            console.log(user)
+            if(user) {
+
+                const {id, email ,nickname, createdAt, updatedAt} = user;
+
+                return {
+                    ok: true,
+                    user: { id, email, nickname, createdAt, updatedAt }
+                }
+            }
+    
+            return {
+                ok: false, 
+                error: "로그인 된 유저를 찾을 수 없습니다."
+            }
+
+        }
+        catch(error) {
+            return {
+                ok: false,
+                error
+            }
+        }
+    }
+    
 }

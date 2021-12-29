@@ -22,7 +22,7 @@ export class User extends CoreEntity {
   password: string;
 
   @ManyToMany(() => User)
-  @Field(type => [User])
-  friends: User[];
+  @Field(type => [User], {nullable: true})
+  friends?: User[];
 }
 

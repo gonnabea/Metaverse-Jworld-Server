@@ -32,12 +32,13 @@ export class LobbyEventsGateway {
   @SubscribeMessage('enter-lobby')
   createConnection(
     @ConnectedSocket() client,
-    @MessageBody() {nickname}) {
+    // 만약 비회원 로그인 시 웹소켓 랜덤 고유 id를 부여
+    @MessageBody() {nickname, userId = client.id}) {
 
     const newClient = {
       nickname,
       connectedRoomId: null,
-      id: client.id
+      id: userId
     }
 
     LobbyEventsGateway.wsClients.push(newClient);
@@ -73,7 +74,7 @@ export class LobbyEventsGateway {
   @SubscribeMessage('create-room')
   async createRoom(
     @ConnectedSocket() client: Socket,
-    @MessageBody() { roomName, nickname, maxPeopleNum }
+    @MessageBody() { roomName, nickname, maxPeopleNum, userId = client.id }
     ) {
     try {
 
@@ -82,7 +83,7 @@ export class LobbyEventsGateway {
         id: uuidv4(),
         creator: nickname,
         createdAt: new Date().toLocaleString(),
-        userList: [client.id],
+        userList: [userId],
         maxPeopleNum,
       };
 1
@@ -113,7 +114,7 @@ export class LobbyEventsGateway {
   @SubscribeMessage('join-room')
   async joinRoom(
     @ConnectedSocket() client: Socket,
-    @MessageBody() { roomId }
+    @MessageBody() { roomId, userId = client.id }
    ) {
     try {
 
@@ -121,7 +122,7 @@ export class LobbyEventsGateway {
       LobbyEventsGateway.wsRooms.map((room: wsRoom) => {
 
         if (room.id === roomId) {
-          room.userList.push(client.id);
+          room.userList.push(userId);
         }
 
       });
@@ -129,7 +130,7 @@ export class LobbyEventsGateway {
       // 유저의 현재 접속중인 방 업데이트해주기
       LobbyEventsGateway.wsClients.map(clientObj => {
 
-        if(clientObj.id === client.id) {
+        if(clientObj.id === userId) {
           clientObj.connectedRoomId = roomId
         }
 
@@ -144,21 +145,29 @@ export class LobbyEventsGateway {
   @SubscribeMessage('leave-room')
   async leaveRoom(
     @ConnectedSocket() client: wsClient,
-    @MessageBody() { id }
+    @MessageBody() { roomId, userId }
     ) {
     try {
+      console.log("스트리밍 룸 떠나기")
       // 해당 유저가 접속해있는 룸 찾기
-      const room = LobbyEventsGateway.wsRooms.find((room: wsRoom) => room.id === id);
+      const room = LobbyEventsGateway.wsRooms.find((room: wsRoom) => room.id === roomId);
 
       // 해당 유저를 뺀 나머지를 유저리스트로 설정
       room.userList = room.userList.filter(
-        (user) => user.id !== client.id,
+        (id) => id !== userId,
       );
+      console.log(room.userList)
+
+      // 실제 객체에 적용
+      LobbyEventsGateway.wsRooms.find((room: wsRoom) => room.id === roomId).userList = room.userList;
+
+      console.log(LobbyEventsGateway.wsRooms)
 
       // 만약 남은 유저가 없을 경우 방 삭제
       if (room.userList.length === 0) {
-        LobbyEventsGateway.wsRooms = LobbyEventsGateway.wsRooms.filter((room: wsRoom) => room.id !== id);
+        LobbyEventsGateway.wsRooms = LobbyEventsGateway.wsRooms.filter((room: wsRoom) => room.id !== roomId);
       }
+
     } catch (error) {
       console.log(error);
     }

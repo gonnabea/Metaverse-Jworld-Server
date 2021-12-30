@@ -84,10 +84,10 @@ export class UsersService {
         }
     }
 
-    async getMe({id, email}: User) {
+    async getMe({userId, username}) {
         try{
            
-            const user = await this.userRepository.findOne(id)
+            const user = await this.userRepository.findOne({id: userId})
             console.log(user)
             if(user) {
 

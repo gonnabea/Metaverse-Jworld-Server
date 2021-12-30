@@ -24,7 +24,9 @@ export class AuthResolver {
         try {
         
             const token = await this.authService.login(loginInput);
-      
+
+            
+            
             if(token){
                 return {
                     ok: true,

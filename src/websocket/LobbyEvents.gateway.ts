@@ -55,13 +55,13 @@ export class LobbyEventsGateway {
   @SubscribeMessage('chat')
   handleBroadcast(
     @ConnectedSocket() client: Socket, 
-    @MessageBody() msg: string
+    @MessageBody() msg
   ) {
     try{
-      console.log(client.id)
+      console.log(msg.nickname)
       console.log(msg);
       
-      client.broadcast.emit("chat", { client: client.id, msg });
+      client.broadcast.emit("chat", { client: msg.nickname, msg: msg.text });
     }
     catch(error) {
       console.log(error)

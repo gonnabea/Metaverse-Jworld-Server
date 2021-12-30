@@ -17,4 +17,5 @@ export interface wsRoom {
   creator: string; // 방장 id
   userList: Array<any>; // 방에 접속 중인 유저 목록
   createdAt: Date;
+  maxPeopleNum: number;
 }

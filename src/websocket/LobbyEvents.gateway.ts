@@ -73,7 +73,7 @@ export class LobbyEventsGateway {
   @SubscribeMessage('create-room')
   async createRoom(
     @ConnectedSocket() client: Socket,
-    @MessageBody() { roomName, nickname }
+    @MessageBody() { roomName, nickname, maxPeopleNum }
     ) {
     try {
 
@@ -83,6 +83,7 @@ export class LobbyEventsGateway {
         creator: nickname,
         createdAt: new Date(),
         userList: [client.id],
+        maxPeopleNum,
       };
 1
       client.join(newRoom.id);
@@ -101,7 +102,7 @@ export class LobbyEventsGateway {
       LobbyEventsGateway.wsRooms.push(newRoom);
       // console.log(LobbyEventsGateway.wsRooms);
 
-      client.emit('create-room', {roomId: newRoom.id, nickname});
+      client.emit('create-room', {roomId: newRoom.id, nickname, maxPeopleNum});
 
     } catch (error) {
       console.log(error);

@@ -7,13 +7,14 @@ export interface broadcastPayload {
 
 export interface wsClient {
   connectedRoomId: string;
+  nickname: string;
   id: string;
 }
 
 export interface wsRoom {
   id: string;
   roomName: string;
-  creatorId: string; // 방장 id
+  creator: string; // 방장 id
   userList: Array<any>; // 방에 접속 중인 유저 목록
   createdAt: Date;
 }

@@ -32,19 +32,20 @@ export class LobbyEventsGateway {
   @SubscribeMessage('enter-lobby')
   createConnection(
     @ConnectedSocket() client,
-    @MessageBody() payload: string) {
+    @MessageBody() {nickname}) {
 
     const newClient = {
-      id: client.id,
-      connectedRoomId: null
+      nickname,
+      connectedRoomId: null,
+      id: client.id
     }
 
     LobbyEventsGateway.wsClients.push(newClient);
-
+    console.log(nickname)
     console.log(LobbyEventsGateway.wsClients.length);
 
     client.emit('enter-lobby', {
-          clientId: client.id, // 새로 접속한 클라이언트 id 전송
+          client: client.id, // 새로 접속한 클라이언트 id 전송
           activeRooms: LobbyEventsGateway.wsRooms, // 현재 생성된 방 목록 전송
         }
     );
@@ -72,14 +73,14 @@ export class LobbyEventsGateway {
   @SubscribeMessage('create-room')
   async createRoom(
     @ConnectedSocket() client: Socket,
-    @MessageBody() { roomName }
+    @MessageBody() { roomName, nickname }
     ) {
     try {
 
       const newRoom: wsRoom = {
         roomName,
         id: uuidv4(),
-        creatorId: client.id,
+        creator: nickname,
         createdAt: new Date(),
         userList: [client.id],
       };
@@ -100,7 +101,7 @@ export class LobbyEventsGateway {
       LobbyEventsGateway.wsRooms.push(newRoom);
       // console.log(LobbyEventsGateway.wsRooms);
 
-      client.emit('create-room', {roomId: newRoom.id});
+      client.emit('create-room', {roomId: newRoom.id, nickname});
 
     } catch (error) {
       console.log(error);

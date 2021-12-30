@@ -81,7 +81,7 @@ export class LobbyEventsGateway {
         roomName,
         id: uuidv4(),
         creator: nickname,
-        createdAt: new Date(),
+        createdAt: new Date().toLocaleString(),
         userList: [client.id],
         maxPeopleNum,
       };

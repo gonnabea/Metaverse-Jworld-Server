@@ -113,6 +113,7 @@ export class LobbyEventsGateway {
       // console.log(LobbyEventsGateway.wsRooms);
 
       client.emit('create-room', {roomId: newRoom.id, nickname, maxPeopleNum});
+      client.broadcast.emit('reloadLobby', {activeRooms: LobbyEventsGateway.wsRooms})
 
     } catch (error) {
       console.log(error);
@@ -184,6 +185,8 @@ export class LobbyEventsGateway {
       }
 
       client.data.connectedRoomId = null;
+
+      client.broadcast.emit('reloadLobby', {activeRooms: LobbyEventsGateway.wsRooms})
 
     } catch (error) {
       console.log(error);

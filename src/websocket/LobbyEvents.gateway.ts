@@ -146,6 +146,9 @@ export class LobbyEventsGateway {
         }
 
       });
+
+      client.broadcast.emit('reloadLobby', {activeRooms: LobbyEventsGateway.wsRooms})
+
       
     } catch (error) {
       console.log(error);

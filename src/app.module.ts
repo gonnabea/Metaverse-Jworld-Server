@@ -10,6 +10,12 @@ import { WebsocketModule } from './websocket/websocket.module';
 import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
 import { User } from './users/entities/user.entity';
+import { MiniHompiModule } from './mini-hompi/mini-hompi.module';
+import { ThreeModelsModule } from './three-models/three-models.module';
+import { ThreeModel } from './three-models/entities/threeModel.entity';
+import { MiniHompi } from './mini-hompi/entities/miniHompi.entity';
+import { FileModule } from './file/file.module';
+
 
 
 @Module({
@@ -48,12 +54,15 @@ import { User } from './users/entities/user.entity';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      entities: [User],
+      entities: [User, ThreeModel, MiniHompi],
     }),
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([User, ThreeModel, MiniHompi]),
     AuthModule,
     UsersModule,
     WebsocketModule,
+    MiniHompiModule,
+    ThreeModelsModule,
+    FileModule,
   ],
   controllers: [],
   providers: [AppResolver, AppService]

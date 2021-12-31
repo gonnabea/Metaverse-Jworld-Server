@@ -37,6 +37,7 @@
     "bcryptjs": "^2.4.3",
     "class-validator": "^0.13.2",
     "graphql": "^15.6.1",
+    "graphql-type-json": "^0.3.2",
     "joi": "^17.5.0",
     "mysql": "^2.18.1",
     "npm": "^8.3.0",

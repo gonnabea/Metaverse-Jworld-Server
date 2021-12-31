@@ -31,7 +31,7 @@ export class LobbyEventsGateway {
   // 새로운 클라이언트 접속 시
   @SubscribeMessage('enter-lobby')
   createConnection(
-    @ConnectedSocket() client,
+    @ConnectedSocket() client: Socket,
     // 만약 비회원 로그인 시 웹소켓 랜덤 고유 id를 부여
     @MessageBody() {nickname, userId = client.id}) {
 
@@ -40,6 +40,9 @@ export class LobbyEventsGateway {
       connectedRoomId: null,
       id: userId
     }
+
+    client.data.userId = userId;
+
 
     LobbyEventsGateway.wsClients.push(newClient);
     console.log(nickname)
@@ -78,6 +81,7 @@ export class LobbyEventsGateway {
     ) {
     try {
 
+      
       const newRoom: wsRoom = {
         roomName,
         id: uuidv4(),
@@ -86,7 +90,12 @@ export class LobbyEventsGateway {
         userList: [userId],
         maxPeopleNum,
       };
-1
+
+
+
+      client.data.userId = userId
+      client.data.connectedRoomId = newRoom.id;
+
       client.join(newRoom.id);
 
       // 유저의 현재 접속중인 방 업데이트해주기
@@ -117,7 +126,8 @@ export class LobbyEventsGateway {
     @MessageBody() { roomId, userId = client.id }
    ) {
     try {
-
+      client.data.userId = userId
+      client.data.connectedRoomId = roomId;
       // 방의 유저 목록 업데이트
       LobbyEventsGateway.wsRooms.map((room: wsRoom) => {
 
@@ -144,11 +154,16 @@ export class LobbyEventsGateway {
   // 웹소켓 룸 나가기
   @SubscribeMessage('leave-room')
   async leaveRoom(
-    @ConnectedSocket() client: wsClient,
-    @MessageBody() { roomId, userId }
+    @ConnectedSocket() client,
+    @MessageBody() { roomId = client.data.connectedRoomId, userId = client.data.userId }
     ) {
     try {
       console.log("스트리밍 룸 떠나기")
+      console.log(roomId)
+      console.log(userId)
+
+      
+
       // 해당 유저가 접속해있는 룸 찾기
       const room = LobbyEventsGateway.wsRooms.find((room: wsRoom) => room.id === roomId);
 
@@ -168,46 +183,53 @@ export class LobbyEventsGateway {
         LobbyEventsGateway.wsRooms = LobbyEventsGateway.wsRooms.filter((room: wsRoom) => room.id !== roomId);
       }
 
+      client.data.connectedRoomId = null;
+
     } catch (error) {
       console.log(error);
     }
   }
 
-  async handleDisconnect( @ConnectedSocket() client: Socket) {
+  async handleDisconnect( 
+    @ConnectedSocket() client:Socket
+    ) {
     try {
-    
-      console.log('로비 떠나기');
-      console.log(client.id)
-      let connectedRoomId;
-
-      // 접속 중인 유저 목록에서 제거
-      LobbyEventsGateway.wsClients.map(clientObj => {
-        if(client.id === clientObj.id) {
-          connectedRoomId = clientObj.connectedRoomId;
-          clientObj.connectedRoomId = null;
-        }
-      });
-                                                
-      // 방의 유저 목록에서 유저 제거
-      LobbyEventsGateway.wsRooms.map(room => {
-        if(room.id === connectedRoomId) {
-          console.log("매칭된 룸");
-          console.log(room)
-          room.userList = room.userList.filter(clientId => clientId != client.id);
-          console.log(room)
-
-        }
-      })
-
-      // 유저 리스트에서 유저 제거
-      LobbyEventsGateway.wsClients = LobbyEventsGateway.wsClients.filter(clientObj => clientObj.id != client.id)
-
-      console.log("LobbyEventsGateway.wsClients")
-      console.log(LobbyEventsGateway.wsClients);
       
-      console.log("LobbyEventsGateway.wsRooms")
-      console.log(LobbyEventsGateway.wsRooms);
-      client.disconnect();
+      console.log('로비 떠나기');
+      console.log(client.data)
+      console.log(client.data.userId)
+      console.log(client.data.connectedRoomId)
+      let connectedRoomId;
+      this.leaveRoom(client, {roomId: client.data.connectedRoomId, userId: client.data.userId})
+
+      // // 접속 중인 유저 목록에서 제거
+      // LobbyEventsGateway.wsClients.map(clientObj => {
+      //   if(client.id === clientObj.id) {
+      //     connectedRoomId = clientObj.connectedRoomId;
+      //     clientObj.connectedRoomId = null;
+      //   }
+      // });
+                                                
+      // // 방의 유저 목록에서 유저 제거
+      // LobbyEventsGateway.wsRooms.map(room => {
+      //   if(room.id === connectedRoomId) {
+      //     console.log("매칭된 룸");
+      //     console.log(room)
+      //     room.userList = room.userList.filter(clientId => clientId != client.id);
+      //     console.log(room)
+
+      //   }
+      // })
+
+      // // 유저 리스트에서 유저 제거
+      // LobbyEventsGateway.wsClients = LobbyEventsGateway.wsClients.filter(clientObj => clientObj.id != client.id)
+
+      // console.log("LobbyEventsGateway.wsClients")
+      // console.log(LobbyEventsGateway.wsClients);
+      
+      // console.log("LobbyEventsGateway.wsRooms")
+      // console.log(LobbyEventsGateway.wsRooms);
+      // client.disconnect();
 
 
       

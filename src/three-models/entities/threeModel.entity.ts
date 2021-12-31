@@ -19,7 +19,7 @@ export class ThreeModel extends CoreEntity {
 
   @Column('text')
   @Field(type => String)
-  nickname: string;
+  name: string;
 
   @Column({type:"json"})
   @Field(type => GraphQLJSONObject)
@@ -37,8 +37,8 @@ export class ThreeModel extends CoreEntity {
   @Field(type => Boolean)
   installed: boolean;
 
-  @Column()
-  @Field(type => Number)
+  @Column({default: 0})
+  @Field(type => Number, {defaultValue: 0})
   price: number;
 
   @ManyToOne(() => User, User => User.ownModels)
@@ -49,15 +49,15 @@ export class ThreeModel extends CoreEntity {
   @Field(type => MiniHompi)
   miniHompi: MiniHompi;
   
-  @Column()
+  @Column({default: false})
   @Field(type => String, {nullable: true})
   videoUrl?: string;
   
-  @Column()
+  @Column({default: false})
   @Field(type => String, {nullable: true})
   imageUrl?: string;
   
-  @Column()
+  @Column({default: false})
   @Field(type => String, {nullable: true})
   textContents?: string;
 

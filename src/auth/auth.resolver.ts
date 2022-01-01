@@ -27,7 +27,7 @@ export class AuthResolver {
 
             
             
-            if(token){
+            if(token !== null){
                 return {
                     ok: true,
                     token

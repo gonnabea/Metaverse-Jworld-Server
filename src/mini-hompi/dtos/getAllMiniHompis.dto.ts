@@ -13,4 +13,5 @@ export class GetAllMiniHompiOutput extends CoreOutput {
     @Field(returns => [MiniHompi], { nullable: true })
     @Column()
     miniHompis?: MiniHompi[]
+
 }

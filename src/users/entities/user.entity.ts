@@ -32,9 +32,10 @@ export class User extends CoreEntity {
   ownModels: ThreeModel[];
 
   @RelationId((user: User) => user.miniHompi)
+  @Field(type => Number, {nullable: true})
   miniHompiId: number;
 
-  @OneToOne(() => MiniHompi, MiniHompi => MiniHompi.owner, {nullable: true})
+  @OneToOne(() => MiniHompi, MiniHompi => MiniHompi.owner, {nullable: true, cascade: true, onDelete: "SET NULL"})
   @JoinColumn()
   @Field(type => MiniHompi, {nullable: true})
   miniHompi: MiniHompi

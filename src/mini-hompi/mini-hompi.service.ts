@@ -27,13 +27,19 @@ export class MiniHompiService {
                     error: "로그인 된 유저를 찾을 수 없습니다."
                 }
             }
+
             console.log(user)
-            // const miniHompi = await this.miniHompiRepository.findOne({id: user.miniHompi?.id});
-            // console.log(miniHompi)
-            // // 기존에 저장된 미니홈피를 제거하여 초기화
-            // if(miniHompi) {
-            //     await this.miniHompiRepository.remove(miniHompi);
-            // }
+
+            const originalHompi = await this.miniHompiRepository.findOne({id: user.miniHompiId});
+
+            console.log(originalHompi)
+
+            // 기존에 저장된 미니홈피를 제거하여 초기화
+            if(originalHompi) {
+                
+                await this.miniHompiRepository.remove(originalHompi);
+                
+            }
             
             const newMiniHompi = this.miniHompiRepository.create({
                 scale
@@ -49,10 +55,7 @@ export class MiniHompiService {
             user.miniHompi = newMiniHompi
            
             await this.userRepository.save(user);
-          
-
-            console.log(user)
-            console.log(newMiniHompi)
+   
 
             return {
                 ok: true,
@@ -79,6 +82,7 @@ export class MiniHompiService {
                 ok: true,
                 status: 200,
                 miniHompis
+            
             }
         }
         catch(error) {

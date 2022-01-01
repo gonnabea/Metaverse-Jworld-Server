@@ -22,6 +22,7 @@ export class MiniHompi extends CoreEntity {
   scale: XYZType;
 
   @RelationId((miniHompi: MiniHompi) => miniHompi.owner)
+  @Field(type => Number, {nullable: true})
   ownerId: number;
 
   @OneToOne(() => User, User => User.miniHompi, {nullable: true})

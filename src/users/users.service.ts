@@ -42,14 +42,18 @@ export class UsersService {
             if(user) {
                 return {
                     ok: false,
-                    error: "해당 이메일로 이미 가입된 유저가 있습니다."
+                    error: "해당 이메일로 이미 가입된 유저가 있습니다.",
+                    status: 409
                 }
             }
+            
+            const checkNickname = await this.userRepository.findOne({ nickname })
 
-            if(user) {
+            if(checkNickname) {
                 return {
                     ok: false,
-                    error: "해당 닉네임의 유저가 이미 있습니다."
+                    error: "해당 닉네임의 유저가 이미 있습니다.",
+                    status: 403
                 }
             }
     
@@ -95,20 +99,23 @@ export class UsersService {
 
                 return {
                     ok: true,
-                    user: { id, email, nickname, createdAt, updatedAt }
+                    user: { id, email, nickname, createdAt, updatedAt },
+                    status: 200
                 }
             }
     
             return {
                 ok: false, 
-                error: "로그인 된 유저를 찾을 수 없습니다."
+                error: "로그인 된 유저를 찾을 수 없습니다.",
+                status: 409
             }
 
         }
         catch(error) {
             return {
                 ok: false,
-                error
+                error,
+                status: 520
             }
         }
     }

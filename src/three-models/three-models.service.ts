@@ -21,7 +21,7 @@ export class ThreeModelsService {
             if(!owner) {
                 return {
                     ok: false,
-                    status: 400,
+                    status: 409,
                     error: "유저를 찾을 수 없습니다."
                 }
             }
@@ -60,7 +60,7 @@ export class ThreeModelsService {
         catch(error) {
             return {
                 ok: false,
-                status: 400,
+                status: 520,
                 error
             }
         }

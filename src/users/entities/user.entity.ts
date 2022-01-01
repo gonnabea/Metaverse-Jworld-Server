@@ -1,11 +1,11 @@
 import { Field, InputType, ObjectType } from '@nestjs/graphql';
 import { CoreEntity } from 'src/common/entities/core.entity';
-import { Entity, Column, ManyToMany, OneToMany, OneToOne } from 'typeorm';
+import { Entity, Column, ManyToMany, OneToMany, OneToOne, RelationId, JoinColumn } from 'typeorm';
 import { IsEmail } from 'class-validator';
 import { ThreeModel } from 'src/three-models/entities/threeModel.entity';
 import { MiniHompi } from 'src/mini-hompi/entities/miniHompi.entity';
 
-@InputType('userInputType')
+@InputType('userInputType', {isAbstract: true})
 @ObjectType()
 @Entity()
 export class User extends CoreEntity {
@@ -23,17 +23,22 @@ export class User extends CoreEntity {
   @Field(type => String)
   password: string;
 
-  @ManyToMany(() => User)
-  @Field(type => [User], {defaultValue: []})
-  friends?: User[];
+  @ManyToMany(() => User, User => User.friends)
+  @Field(type => [User])
+  friends: User[];
 
   @OneToMany(() => ThreeModel, ThreeModel => ThreeModel.owner)
-  @Field(() => [ThreeModel], {defaultValue: []})
-  ownModels?: ThreeModel[];
+  @Field(() => [ThreeModel])
+  ownModels: ThreeModel[];
 
+  @RelationId((user: User) => user.miniHompi)
+  miniHompiId: number;
 
-  @OneToOne(type => MiniHompi, MiniHompi => MiniHompi.owner)
-  @Field(type => MiniHompi, {defaultValue: []})
-  miniHompi?: MiniHompi
+  @OneToOne(() => MiniHompi, MiniHompi => MiniHompi.owner, {nullable: true})
+  @JoinColumn()
+  @Field(type => MiniHompi, {nullable: true})
+  miniHompi: MiniHompi
 }
+
+
 

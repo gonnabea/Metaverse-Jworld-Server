@@ -101,9 +101,6 @@ export class MiniHompiService {
                 })
             })
          
-
-          
-            
             return {
                 ok: true,
                 status: 200,

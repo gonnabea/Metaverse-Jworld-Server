@@ -45,7 +45,7 @@ export class ThreeModel extends CoreEntity {
   @Field(type => User)
   owner: User;
 
-  @ManyToOne(() => MiniHompi, MiniHompi => MiniHompi.threeModels)
+  @ManyToOne(() => MiniHompi, MiniHompi => MiniHompi.threeModels, {onDelete: "CASCADE"})
   @Field(type => MiniHompi)
   miniHompi: MiniHompi;
   

@@ -1,7 +1,8 @@
 import { UseGuards } from '@nestjs/common';
-import { Args, Mutation, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { GqlAuthGuard } from 'src/auth/gql-auth.guard';
 import { CurrentUser } from 'src/users/users.decorator';
+import { GetThreeModelsInput, GetThreeModelsOutput } from './dtos/getThreeModels.dto';
 import { SaveThreeModelInput, SaveThreeModelOutput } from './dtos/saveThreeModel.dto';
 import { ThreeModelsService } from './three-models.service';
 
@@ -14,7 +15,12 @@ export class ThreeModelsResolver {
 
     @Mutation(returns => SaveThreeModelOutput)
     @UseGuards(GqlAuthGuard)
-    async saveThreeModel(@Args('input') saveThreeModelInput:SaveThreeModelInput, @CurrentUser() owner):Promise<SaveThreeModelOutput> {
+    async saveThreeModels(@Args('input') saveThreeModelInput:SaveThreeModelInput, @CurrentUser() owner):Promise<SaveThreeModelOutput> {
         return await this.threeModelService.save(saveThreeModelInput, owner)
+    }
+
+    @Query(returns => GetThreeModelsOutput)
+    async getThreeModels(@Args('input') getThreeModelsInput: GetThreeModelsInput): Promise<GetThreeModelsOutput> {
+        return await this.threeModelService.getModels(getThreeModelsInput)
     }
 }

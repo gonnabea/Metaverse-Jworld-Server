@@ -29,8 +29,10 @@ export class MiniHompi extends CoreEntity {
   @JoinColumn()
   owner: User;
 
-  @OneToMany(() => ThreeModel, ThreeModel => ThreeModel.miniHompi)
-  @Field(type => [MiniHompi])
+  @OneToMany(() => ThreeModel, ThreeModel => ThreeModel.miniHompi, {nullable: true, cascade: true})
+  @Field(type => [MiniHompi], {nullable: true})
   threeModels: ThreeModel[]
+
+
 }
 

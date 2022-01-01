@@ -27,8 +27,8 @@ export class User extends CoreEntity {
   @Field(type => [User])
   friends: User[];
 
-  @OneToMany(() => ThreeModel, ThreeModel => ThreeModel.owner)
-  @Field(() => [ThreeModel])
+  @OneToMany(() => ThreeModel, ThreeModel => ThreeModel.owner, {cascade: true, nullable: true})
+  @Field(() => [ThreeModel], {nullable: true})
   ownModels: ThreeModel[];
 
   @RelationId((user: User) => user.miniHompi)

@@ -25,7 +25,7 @@ export class MiniHompi extends CoreEntity {
   @Field(type => User)
   owner: User;
 
-  @OneToMany(() => ThreeModel, ThreeModel => ThreeModel.miniHompi)
+  @OneToMany(() => ThreeModel, ThreeModel => ThreeModel.miniHompi, {onDelete: 'CASCADE'})
   @Field(type => [MiniHompi])
   threeModels: ThreeModel[]
 }

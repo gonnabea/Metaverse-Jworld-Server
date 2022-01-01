@@ -24,16 +24,16 @@ export class User extends CoreEntity {
   password: string;
 
   @ManyToMany(() => User)
-  @Field(type => [User], {nullable: true})
+  @Field(type => [User], {defaultValue: []})
   friends?: User[];
 
   @OneToMany(() => ThreeModel, ThreeModel => ThreeModel.owner)
-  @Field(() => [ThreeModel])
+  @Field(() => [ThreeModel], {defaultValue: []})
   ownModels?: ThreeModel[];
 
 
   @OneToOne(type => MiniHompi, MiniHompi => MiniHompi.owner)
-  @Field(type => MiniHompi, {nullable: true})
+  @Field(type => MiniHompi, {defaultValue: []})
   miniHompi?: MiniHompi
 }
 

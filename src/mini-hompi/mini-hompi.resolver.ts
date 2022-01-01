@@ -4,6 +4,7 @@ import { GqlAuthGuard } from 'src/auth/gql-auth.guard';
 import { CurrentUser } from 'src/users/users.decorator';
 import { CreateMiniHompiInput, CreateMiniHompiOutput } from './dtos/createMiniHompi.dto';
 import { GetAllMiniHompiInput, GetAllMiniHompiOutput } from './dtos/getAllMiniHompis.dto';
+import { GetMiniHompiInput, GetMiniHompiOutput } from './dtos/getMiniHompi.dto';
 import { MiniHompiService } from './mini-hompi.service';
 
 @Resolver()
@@ -22,6 +23,11 @@ export class MiniHompiResolver {
     @Query(returns => GetAllMiniHompiOutput)
     async getAllMiniHompis(): Promise<GetAllMiniHompiOutput> {
         return await this.miniHompiService.getAll()
+    }
+
+    @Query(returns => GetMiniHompiOutput)
+    async getMiniHompi(@Args('input') getMiniHompiInput: GetMiniHompiInput):Promise<GetMiniHompiOutput> {
+        return await this.miniHompiService.getOne(getMiniHompiInput)
     }
 
 

@@ -37,7 +37,6 @@ export class User extends CoreEntity {
 
   @OneToOne(() => MiniHompi, MiniHompi => MiniHompi.owner, {nullable: true, cascade: true, onDelete: "SET NULL"})
   @JoinColumn()
-  @Field(type => MiniHompi, {nullable: true})
   miniHompi: MiniHompi
 }
 

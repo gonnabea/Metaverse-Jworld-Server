@@ -207,55 +207,6 @@ export class LobbyEventsGateway {
       console.log(client.data.connectedRoomId)
       let connectedRoomId;
       this.leaveRoom(client, {roomId: client.data.connectedRoomId, userId: client.data.userId})
-
-      // // 접속 중인 유저 목록에서 제거
-      // LobbyEventsGateway.wsClients.map(clientObj => {
-      //   if(client.id === clientObj.id) {
-      //     connectedRoomId = clientObj.connectedRoomId;
-      //     clientObj.connectedRoomId = null;
-      //   }
-      // });
-                                                
-      // // 방의 유저 목록에서 유저 제거
-      // LobbyEventsGateway.wsRooms.map(room => {
-      //   if(room.id === connectedRoomId) {
-      //     console.log("매칭된 룸");
-      //     console.log(room)
-      //     room.userList = room.userList.filter(clientId => clientId != client.id);
-      //     console.log(room)
-
-      //   }
-      // })
-
-      // // 유저 리스트에서 유저 제거
-      // LobbyEventsGateway.wsClients = LobbyEventsGateway.wsClients.filter(clientObj => clientObj.id != client.id)
-
-      // console.log("LobbyEventsGateway.wsClients")
-      // console.log(LobbyEventsGateway.wsClients);
-      
-      // console.log("LobbyEventsGateway.wsRooms")
-      // console.log(LobbyEventsGateway.wsRooms);
-      // client.disconnect();
-
-
-      
-      
-        // // 룸에서 해당 유저 제거
-        // connectedRoom.userList = connectedRoom.userList.filter(
-        //   (user) => user.id !== client.id,
-        // );
-
-        // // 유저가 접속해 있던 방의 참여자 수가 0이 될 경우
-        // // 룸 제거
-        // if (connectedRoom.userList.length === 0) {
-        //   LobbyEventsGateway.wsRooms = LobbyEventsGateway.wsRooms.filter(
-        //     (room) => room.id !== client.connectedRoomId,
-        //   );
-        // } else {
-        //   // 방장 변경
-        //   connectedRoom.creatorId = connectedRoom.userList[0].id;
-        // }
-
         
       
     } catch (error) {

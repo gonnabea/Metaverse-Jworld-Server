@@ -30,8 +30,8 @@ export class ThreeModel extends CoreEntity {
   scale: XYZType;
 
   @Column()
-  @Field(type => Number)
-  rotateX: number;
+  @Field(type => String)
+  rotateY: string;
 
   @Column()
   @Field(type => Boolean)

@@ -32,8 +32,20 @@ export class ThreeModelsService {
                 }
             }
 
+            if(!miniHompi) {
+                return {
+                    ok: false,
+                    status: 409,
+                    error: "유저의 미니홈피를 찾을 수 없습니다."
+                }
+            }
+
             console.log(user)
             console.log(miniHompi)
+
+            const originalModels = await this.threeModelRepository.find({miniHompi});
+
+            await this.threeModelRepository.remove(originalModels)
 
 
 
@@ -41,7 +53,7 @@ export class ThreeModelsService {
 
                 installed,
                 scale,
-                rotateX,
+                rotateY,
                 position,
                 name,
                 price,
@@ -54,7 +66,7 @@ export class ThreeModelsService {
                 const model = this.threeModelRepository.create({
                     installed,
                     scale,
-                    rotateX,
+                    rotateY,
                     position,
                     name,
                     price,

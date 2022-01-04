@@ -13,7 +13,6 @@ export class MiniHompiService {
     constructor(
         @InjectRepository(MiniHompi) private readonly miniHompiRepository: Repository<MiniHompi>,
         @InjectRepository(User) private readonly userRepository: Repository<User>,
-
     ) {}
 
     async create({ scale }: CreateMiniHompiInput, owner): Promise<CreateMiniHompiOutput> {
@@ -29,11 +28,7 @@ export class MiniHompiService {
                 }
             }
 
-            
-
             const originalHompi = await this.miniHompiRepository.findOne({id: user.miniHompiId});
-
-            
 
             // 기존에 저장된 미니홈피를 제거하여 초기화
             if(originalHompi) {
@@ -46,15 +41,10 @@ export class MiniHompiService {
                 scale
             })
 
-            
-
-            
             newMiniHompi.owner = user;
+            user.miniHompi = newMiniHompi
             
             await this.miniHompiRepository.save(newMiniHompi)
-
-            user.miniHompi = newMiniHompi
-           
             await this.userRepository.save(user);
    
 

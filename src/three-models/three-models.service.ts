@@ -59,8 +59,8 @@ export class ThreeModelsService {
                 price,
                 videoUrl,
                 imageUrl,
-                textContents
-
+                textContents,
+                index
             }) => {
 
                 const model = this.threeModelRepository.create({
@@ -74,7 +74,8 @@ export class ThreeModelsService {
                     miniHompi,
                     videoUrl,
                     imageUrl,
-                    textContents
+                    textContents,
+                    index
                 });
 
                 await this.threeModelRepository.save(model);

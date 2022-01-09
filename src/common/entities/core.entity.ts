@@ -8,11 +8,11 @@ export class CoreEntity {
     id: number
 
     @CreateDateColumn()
-    @Field(type => Date)
+    @Field(type => Date, {defaultValue: new Date().toLocaleTimeString()})
     createdAt: Date
 
     @UpdateDateColumn()
-    @Field(type => Date)
+    @Field(type => Date, {defaultValue: new Date().toLocaleTimeString()})
     updatedAt: Date
 
 }

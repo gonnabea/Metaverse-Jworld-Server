@@ -28,6 +28,11 @@ class ThreeModelInput {
     @Column('text')
     @Field(type => String)
     name: string;
+
+    // 동일 모델 다수 저장 시 필요
+    @Column()
+    @Field(type => Number, {nullable: true})
+    index?: number;
   
     @Column({type:"json"})
     @Field(type => GraphQLJSONObject)

@@ -38,6 +38,14 @@ export class User extends CoreEntity {
   @OneToOne(() => MiniHompi, MiniHompi => MiniHompi.owner, {nullable: true, cascade: true, onDelete: "SET NULL"})
   @JoinColumn()
   miniHompi: MiniHompi
+
+  @Column({default: false})
+  @Field(type => String, {nullable: true})
+  videoUrl?: string;
+  
+  @Column({default: false})
+  @Field(type => String, {nullable: true})
+  imageUrl?: string;
 }
 
 

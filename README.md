@@ -14,7 +14,7 @@
 - [x] JWT Login
 - [ ] WebRTC
 - [ ] Mediasoup (WebRTC SFU Media Server)
-- [ ] AWS or Oracle Cloud Free Tier or etc..
+- [x] Oracle Cloud Free Tier
 - [ ] Docker
 - [ ] Nginx
 - [ ] Ubuntu SSH
@@ -50,7 +50,7 @@
 - [x] 3D 오브젝트 (가구) & 커스텀 배치 기능
 - [x] 미니홈피 저장
 - [ ] 미니홈피 TV에 영상 목록 커스텀 기능 등록
-- [ ] 액자 생성 기능
+- [x] 액자 생성 기능
 
 ### 1차 대규모 업데이트
 
@@ -63,7 +63,7 @@
 - 미니홈피
 
 - [ ] 초대 기능 (초대 수락, 요청)
-- [ ] 방 생성 기능
+- [x] 방 생성 기능
 - [ ] 음성채팅
 - [ ] 미니홈피 추천 기능
 

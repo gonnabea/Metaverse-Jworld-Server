@@ -7,9 +7,7 @@ import { ThreeModel } from './entities/threeModel.entity';
 import { MiniHompi } from 'src/mini-hompi/entities/miniHompi.entity';
 
 @Module({
-  imports:[
-    TypeOrmModule.forFeature([User, ThreeModel, MiniHompi])
-  ],
-  providers: [ThreeModelsService, ThreeModelsResolver]
+  imports: [TypeOrmModule.forFeature([User, ThreeModel, MiniHompi])],
+  providers: [ThreeModelsService, ThreeModelsResolver],
 })
 export class ThreeModelsModule {}

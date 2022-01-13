@@ -8,16 +8,15 @@
 - [x] Nest.js
 - [x] TypeScript
 - [x] GraphQL
-- [ ] REST API
+- [ ] REST API (axios)
 - [x] DB (PostgresQL or Cassandra, etc..)
 - [x] Websocket
 - [x] JWT Login
 - [ ] WebRTC
 - [ ] Mediasoup (WebRTC SFU Media Server)
-- [x] Oracle Cloud Free Tier
-- [ ] Docker
+- [x] Docker
+- [x] Ubuntu SSH (Oracle Cloud Free Tier)
 - [ ] Nginx
-- [ ] Ubuntu SSH
 
 ## 기능
 
@@ -45,7 +44,6 @@
 - [x] 미니홈피 생성 & 초기화
 - [ ] 게시글 등록
 - [ ] 방명록 작성 (벽 낙서하기, 책, 게시판)
-- [ ] 배경음 등록 & 설정
 - [x] 방 크기 커스텀 기능
 - [x] 3D 오브젝트 (가구) & 커스텀 배치 기능
 - [x] 미니홈피 저장

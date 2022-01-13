@@ -7,9 +7,7 @@ import { MiniHompiResolver } from './mini-hompi.resolver';
 import { MiniHompiService } from './mini-hompi.service';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([User, ThreeModel, MiniHompi])
-  ],
-  providers: [MiniHompiResolver, MiniHompiService]
+  imports: [TypeOrmModule.forFeature([User, ThreeModel, MiniHompi])],
+  providers: [MiniHompiResolver, MiniHompiService],
 })
 export class MiniHompiModule {}

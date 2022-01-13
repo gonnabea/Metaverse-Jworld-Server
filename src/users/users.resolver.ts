@@ -12,29 +12,24 @@ import { User } from './entities/user.entity';
 import { CurrentUser } from './users.decorator';
 import { UsersService } from './users.service';
 
-
 @Resolver()
 export class UsersResolver {
+  constructor(private usersService: UsersService) {}
 
-    constructor(
-        private usersService: UsersService
-    ) {}
+  @Mutation((returns) => JoinOutput)
+  async join(@Args('input') joinInput: JoinInput): Promise<JoinOutput> {
+    return await this.usersService.join(joinInput);
+  }
 
-    
-    @Mutation(returns => JoinOutput)
-    async join(@Args('input') joinInput:JoinInput):Promise<JoinOutput> {
-        return await this.usersService.join(joinInput)
-    }
-
-    @Mutation(() => String)
-    sayHello(): string {
+  @Mutation(() => String)
+  sayHello(): string {
     return 'Hello World!';
-    }
+  }
 
-    @Query(() => GetMeOutput)
-    @UseGuards(GqlAuthGuard)
-    getMe(@CurrentUser() user) {
-        console.log(user)
-        return this.usersService.getMe(user)
-    }
+  @Query(() => GetMeOutput)
+  @UseGuards(GqlAuthGuard)
+  getMe(@CurrentUser() user) {
+    console.log(user);
+    return this.usersService.getMe(user);
+  }
 }

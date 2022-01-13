@@ -7,7 +7,5 @@ export class SfuStream {
   static socketToRoom = {};
 
   @SubscribeMessage('start-webrtc')
-  startWebrtc() {
-
-  }
+  startWebrtc() {}
 }

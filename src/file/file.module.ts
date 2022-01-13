@@ -4,6 +4,6 @@ import { FileResolver } from './file.resolver';
 
 @Module({
   controllers: [],
-  providers: [FileService, FileResolver]
+  providers: [FileService, FileResolver],
 })
 export class FileModule {}

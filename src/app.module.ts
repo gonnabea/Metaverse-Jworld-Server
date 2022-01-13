@@ -16,7 +16,7 @@ import { ThreeModel } from './three-models/entities/threeModel.entity';
 import { MiniHompi } from './mini-hompi/entities/miniHompi.entity';
 import { FileModule } from './file/file.module';
 
-
+console.log(process.env.DB_PORT)
 
 @Module({
   imports: [
@@ -38,14 +38,16 @@ import { FileModule } from './file/file.module';
       debug: true,
       playground: true,
       context: ({ req, connection }) => {
-        if(req) {
+        if (req) {
           const user = req.headers.authorization;
           return { ...req, user };
         } else {
           return connection;
         }
-      }
+      },
     }),
+
+    
     TypeOrmModule.forRoot({
       synchronize: process.env.NODE_ENV !== 'prod',
       type: 'postgres',
@@ -65,6 +67,7 @@ import { FileModule } from './file/file.module';
     FileModule,
   ],
   controllers: [],
-  providers: [AppResolver, AppService]
+  providers: [AppResolver, AppService],
 })
+
 export class AppModule {}

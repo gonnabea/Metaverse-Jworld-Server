@@ -11,15 +11,15 @@ import { AuthResolver } from './auth.resolver';
 
 @Module({
   imports: [
-    UsersModule, 
+    UsersModule,
     PassportModule,
     JwtModule.register({
       secret: 'secret',
       signOptions: { expiresIn: '1 day' },
     }),
-    TypeOrmModule.forFeature([User])
+    TypeOrmModule.forFeature([User]),
   ],
   providers: [AuthService, LocalStrategy, JwtStrategy, AuthResolver],
-  exports: [AuthService]
+  exports: [AuthService],
 })
 export class AuthModule {}

@@ -2,8 +2,6 @@ import { Module } from '@nestjs/common';
 import { LobbyEventsGateway } from './LobbyEvents.gateway';
 
 @Module({
-    providers: [LobbyEventsGateway]
+  providers: [LobbyEventsGateway],
 })
-export class WebsocketModule {
-    
-}
+export class WebsocketModule {}

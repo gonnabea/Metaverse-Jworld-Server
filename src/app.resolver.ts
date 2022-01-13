@@ -9,15 +9,13 @@ import { LoginInput, LoginOutput } from './auth/dtos/login.dto';
 
 @Resolver()
 export class AppResolver {
-
   constructor(
     private appServeice: AppService,
-    private authService: AuthService
-) {}
+    private authService: AuthService,
+  ) {}
 
   @Query(() => String)
   sayHello(): string {
     return 'Hello World!';
   }
-
 }

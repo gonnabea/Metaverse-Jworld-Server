@@ -8,44 +8,40 @@ import { LocalAuthGuard } from './local-auth.guard';
 import { GqlAuthGuard } from './gql-auth.guard';
 
 export interface Context {
-    user?: any;
-  }
+  user?: any;
+}
 
 @Resolver()
 export class AuthResolver {
-    // private logger: Logger;
-    constructor(private authService: AuthService) {
-        // this.logger = new Logger('AuthResolver');
+  // private logger: Logger;
+  constructor(private authService: AuthService) {
+    // this.logger = new Logger('AuthResolver');
+  }
+
+  @Query(() => LoginOutput)
+  async login(@Args('input') loginInput: LoginInput): Promise<LoginOutput> {
+    try {
+      const token = await this.authService.login(loginInput);
+
+      if (token !== null) {
+        return {
+          ok: true,
+          token,
+        };
+      }
+    } catch (e) {
+      // this.logger.error(e);
+      console.log(e);
+      return {
+        ok: false,
+        error: '로그인에 실패하였습니다.',
+      };
     }
+  }
 
-    
-    @Query(() => LoginOutput)
-    async login(@Args('input') loginInput: LoginInput):Promise<LoginOutput> {
-        try {
-        
-            const token = await this.authService.login(loginInput);
-
-            
-            
-            if(token !== null){
-                return {
-                    ok: true,
-                    token
-                }
-            }
-          } catch (e) {
-            // this.logger.error(e);
-            console.log(e)
-            return {
-                ok: false,
-                error: "로그인에 실패하였습니다."
-            }
-          }
-    }
-
-    // @UseGuards(JwtAuthGuard)
-    // @Query(returns => CoreOutput)
-    // getProfile(@Args() req) {
-    //   return req.user;
-    // }
+  // @UseGuards(JwtAuthGuard)
+  // @Query(returns => CoreOutput)
+  // getProfile(@Args() req) {
+  //   return req.user;
+  // }
 }

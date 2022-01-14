@@ -8,7 +8,7 @@
 - [x] Nest.js
 - [x] TypeScript
 - [x] GraphQL
-- [ ] REST API (axios)
+- [x] REST API (For Files)
 - [x] DB (PostgresQL + Cassandra. etc..)
 - [x] Websocket
 - [x] JWT Login

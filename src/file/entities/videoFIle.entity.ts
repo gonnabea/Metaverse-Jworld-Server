@@ -15,21 +15,23 @@ import { User } from 'src/users/entities/user.entity';
 import { ThreeModel } from '../../three-models/entities/threeModel.entity';
 import { GraphQLJSONObject } from 'graphql-type-json';
 
-
+@InputType('videoInputType')
+@ObjectType()
 @Entity()
-export class VideoFile extends CoreEntity {
-  
-    @Column()
-    videoUrl: string;
-  
-    @Column()
-    title: string;
+export class VideoModel extends CoreEntity {
+  @Column()
+  @Field((type) => String)
+  videoUrl: string;
 
-    @Column()
-    description: string;
+  @Column()
+  @Field((type) => String)
+  title: string;
 
-    @ManyToOne(() => User, (User) => User.ownVideos)
-    owner: User;
-     
-     
+  @Column()
+  @Field((type) => String)
+  description: string;
+
+  @ManyToOne(() => User, (User) => User.ownVideos)
+  @Field((type) => User)
+  owner: User;
 }

@@ -13,10 +13,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 export class AuthService {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
-    private jwtService: JwtService,
-  ) // private logger: Logger,
-
-  {}
+    private jwtService: JwtService, // private logger: Logger,
+  ) {}
 
   async validateUser(email: string, password: string): Promise<any> {
     console.log('asdfadsfadfa');

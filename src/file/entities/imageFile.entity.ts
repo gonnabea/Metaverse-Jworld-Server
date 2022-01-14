@@ -15,22 +15,23 @@ import { User } from 'src/users/entities/user.entity';
 import { ThreeModel } from '../../three-models/entities/threeModel.entity';
 import { GraphQLJSONObject } from 'graphql-type-json';
 
-
+@InputType('imageInputType')
+@ObjectType()
 @Entity()
-export class ImageFile extends CoreEntity {
-  
-    @Column()
-    imageUrl: string;
-  
-    @Column()
-    title: string;
+export class ImageModel extends CoreEntity {
+  @Column()
+  @Field((type) => String)
+  imageUrl: string;
 
-    @Column()
-    description: string;
+  @Column()
+  @Field((type) => String)
+  title: string;
 
-    @ManyToOne(() => User, (User) => User.ownImages)
-    owner: User;
-     
-     
-     
+  @Column()
+  @Field((type) => String)
+  description: string;
+
+  @ManyToOne(() => User, (User) => User.ownImages)
+  @Field((type) => User)
+  owner: User;
 }

@@ -18,7 +18,7 @@ import { FileModule } from './file/file.module';
 import { ImageFile } from './file/entities/imageFile.entity';
 import { VideoFile } from './file/entities/videoFIle.entity';
 
-console.log(process.env.DB_PORT)
+console.log(process.env.DB_PORT);
 
 @Module({
   imports: [
@@ -49,7 +49,6 @@ console.log(process.env.DB_PORT)
       },
     }),
 
-    
     TypeOrmModule.forRoot({
       synchronize: process.env.NODE_ENV !== 'prod',
       type: 'postgres',
@@ -60,7 +59,13 @@ console.log(process.env.DB_PORT)
       database: process.env.DB_DATABASE,
       entities: [User, ThreeModel, MiniHompi, ImageFile, VideoFile],
     }),
-    TypeOrmModule.forFeature([User, ThreeModel, MiniHompi, ImageFile, VideoFile]),
+    TypeOrmModule.forFeature([
+      User,
+      ThreeModel,
+      MiniHompi,
+      ImageFile,
+      VideoFile,
+    ]),
     AuthModule,
     UsersModule,
     WebsocketModule,
@@ -71,5 +76,4 @@ console.log(process.env.DB_PORT)
   controllers: [],
   providers: [AppResolver, AppService],
 })
-
 export class AppModule {}

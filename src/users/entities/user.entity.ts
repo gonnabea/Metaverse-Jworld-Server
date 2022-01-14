@@ -60,13 +60,12 @@ export class User extends CoreEntity {
     cascade: true,
     nullable: true,
   })
-  @Field((type) => [ImageModel])
+
   ownImages: ImageModel[];
 
   @OneToMany(() => VideoModel, (videoModel) => videoModel.owner, {
     cascade: true,
     nullable: true,
   })
-  @Field((type) => [VideoModel])
   ownVideos: VideoModel[];
 }

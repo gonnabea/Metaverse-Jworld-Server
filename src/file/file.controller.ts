@@ -1,39 +1,53 @@
 import {
+    Body,
   Controller,
   Get,
+  Param,
   Post,
+  Request,
   UploadedFile,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { Args } from '@nestjs/graphql';
 import { FileInterceptor } from '@nestjs/platform-express';
-import {
-  PostImageInput,
-  postImageInput,
-  PostVideoInput,
-} from './dtos/postFIle.dto';
+import { ApiConsumes } from '@nestjs/swagger';
+import { GqlAuthGuard } from 'src/auth/gql-auth.guard';
+import { JwtAuthGuard } from 'src/auth/jwt-auth-guard';
+import { CurrentUser } from 'src/users/users.decorator';
+import { PostFileInput } from './dtos/postFIle.dto';
 import { FileService } from './file.service';
+
 
 @Controller('file')
 export class FileController {
   constructor(private readonly fileService: FileService) {}
 
-  @Post('img_upload')
+  @Post('image_upload')
+  @UseGuards(JwtAuthGuard)
+  @ApiConsumes('multipart/form-data')
   @UseInterceptors(FileInterceptor('file'))
-  postImage(
+  async postImage(
     @UploadedFile() file: Express.Multer.File,
-    @Args() postImageInput: PostImageInput,
+    @Body() postImageInput: PostFileInput,
+    @Request() req,
   ) {
-    this.fileService.uploadImage(file, postImageInput);
+    console.log(file)
+    console.log(postImageInput)
+    console.log("이미지 업로드")
+    return this.fileService.uploadImage(file, postImageInput, req.user)
   }
 
   @Post('video_upload')
-  @UseInterceptors(FileInterceptor('file'))
-  postVideo(
-    @UploadedFile() file: Express.Multer.File,
-    @Args() postVideoInput: PostVideoInput,
+  @UseGuards(JwtAuthGuard)
+  @ApiConsumes('multipart/form-data')
+  @UseInterceptors(FileInterceptor('videoFile'))
+  async postVideo(
+    @UploadedFile() videoFile: Express.Multer.File,
+    @Body() postVideoInput: PostFileInput,
+    @Request() req,
   ) {
-    this.fileService.uploadVideo(file, postVideoInput);
+      console.log(req.user)
+    return this.fileService.uploadVideo(videoFile, postVideoInput, req.user);
   }
 }
 

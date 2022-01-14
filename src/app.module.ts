@@ -15,8 +15,9 @@ import { ThreeModelsModule } from './three-models/three-models.module';
 import { ThreeModel } from './three-models/entities/threeModel.entity';
 import { MiniHompi } from './mini-hompi/entities/miniHompi.entity';
 import { FileModule } from './file/file.module';
-import { ImageFile } from './file/entities/imageFile.entity';
-import { VideoFile } from './file/entities/videoFIle.entity';
+import { ImageModel } from './file/entities/imageFile.entity';
+import { VideoModel } from './file/entities/videoFIle.entity';
+import { MulterModule } from '@nestjs/platform-express';
 
 console.log(process.env.DB_PORT);
 
@@ -48,7 +49,9 @@ console.log(process.env.DB_PORT);
         }
       },
     }),
-
+    MulterModule.register({
+      dest: './upload',
+    }),
     TypeOrmModule.forRoot({
       synchronize: process.env.NODE_ENV !== 'prod',
       type: 'postgres',
@@ -57,14 +60,14 @@ console.log(process.env.DB_PORT);
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      entities: [User, ThreeModel, MiniHompi, ImageFile, VideoFile],
+      entities: [User, ThreeModel, MiniHompi, ImageModel, VideoModel],
     }),
     TypeOrmModule.forFeature([
       User,
       ThreeModel,
       MiniHompi,
-      ImageFile,
-      VideoFile,
+      ImageModel,
+      VideoModel,
     ]),
     AuthModule,
     UsersModule,

@@ -3,10 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/users/entities/user.entity';
 import { Repository } from 'typeorm';
 import {
-  PostImageInput,
-  PostImageOutput,
-  PostVideoInput,
-  PostVideoOutput,
+    PostFileInput, PostFileOutput,
+
 } from './dtos/postFIle.dto';
 import { ImageModel } from './entities/imageFile.entity';
 import { VideoModel } from './entities/videoFIle.entity';
@@ -23,11 +21,36 @@ export class FileService {
 
   async uploadImage(
     file: Express.Multer.File,
-    postImageInput: PostImageInput,
-  ): PostImageOutput {}
+    postImageInput: PostFileInput,
+    owner: User
+  ): Promise<PostFileOutput> {
+    try{
+
+
+    }
+    catch(error) {
+        return {
+            ok: false,
+            error,
+            status: 400
+        }
+    }
+  }
 
   async uploadVideo(
     file: Express.Multer.File,
-    postVideoInput: PostVideoInput,
-  ): PostVideoOutput {}
+    postVideoInput: PostFileInput,
+    owner: User
+  ): Promise<PostFileOutput> {
+      try{
+
+      }
+      catch(error) {
+          return {
+              ok: false,
+              error,
+              status: 400
+          }
+      }
+  }
 }

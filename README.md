@@ -9,14 +9,14 @@
 - [x] TypeScript
 - [x] GraphQL
 - [ ] REST API (axios)
-- [x] DB (PostgresQL or Cassandra, etc..)
+- [x] DB (PostgresQL + Cassandra. etc..)
 - [x] Websocket
 - [x] JWT Login
 - [ ] WebRTC
 - [ ] Mediasoup (WebRTC SFU Media Server)
 - [x] Docker
 - [x] Ubuntu SSH (Oracle Cloud Free Tier)
-- [ ] Nginx
+- [x] Nginx
 
 ## 기능
 

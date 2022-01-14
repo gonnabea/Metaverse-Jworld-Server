@@ -15,6 +15,8 @@ import { ThreeModelsModule } from './three-models/three-models.module';
 import { ThreeModel } from './three-models/entities/threeModel.entity';
 import { MiniHompi } from './mini-hompi/entities/miniHompi.entity';
 import { FileModule } from './file/file.module';
+import { ImageFile } from './file/entities/imageFile.entity';
+import { VideoFile } from './file/entities/videoFIle.entity';
 
 console.log(process.env.DB_PORT)
 
@@ -56,9 +58,9 @@ console.log(process.env.DB_PORT)
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      entities: [User, ThreeModel, MiniHompi],
+      entities: [User, ThreeModel, MiniHompi, ImageFile, VideoFile],
     }),
-    TypeOrmModule.forFeature([User, ThreeModel, MiniHompi]),
+    TypeOrmModule.forFeature([User, ThreeModel, MiniHompi, ImageFile, VideoFile]),
     AuthModule,
     UsersModule,
     WebsocketModule,

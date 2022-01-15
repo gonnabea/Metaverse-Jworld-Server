@@ -18,8 +18,8 @@ import { FileModule } from './file/file.module';
 import { ImageModel } from './file/entities/imageFile.entity';
 import { VideoModel } from './file/entities/videoFIle.entity';
 import { MulterModule } from '@nestjs/platform-express';
-
-console.log(process.env.DB_PORT);
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -36,6 +36,9 @@ console.log(process.env.DB_PORT);
         DB_DATABASE: Joi.string().required(),
       }),
     }),
+    // ServeStaticModule.forRoot({
+    //   rootPath: join(__dirname, '..', 'public'),
+    // }),
     GraphQLModule.forRoot({
       autoSchemaFile: true,
       debug: true,
@@ -49,9 +52,7 @@ console.log(process.env.DB_PORT);
         }
       },
     }),
-    MulterModule.register({
-      dest: './upload',
-    }),
+ 
     TypeOrmModule.forRoot({
       synchronize: process.env.NODE_ENV !== 'prod',
       type: 'postgres',

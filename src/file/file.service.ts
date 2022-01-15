@@ -10,7 +10,7 @@ import { ImageModel } from './entities/imageFile.entity';
 import { VideoModel } from './entities/videoFIle.entity';
 import { createImageURL } from "../lib/multerOptions";
 import path from 'path';
-import { GetFileInput } from './dtos/getFile.dto';
+import { GetFileInput, GetFileOutput } from './dtos/getFile.dto';
 
 @Injectable()
 export class FileService {
@@ -66,11 +66,35 @@ export class FileService {
 
   async uploadVideo(
     file: Express.Multer.File,
-    postVideoInput: PostFileInput,
-    owner: User
+    {title, description}: PostFileInput,
+    owner
   ): Promise<PostFileOutput> {
       try{
-
+        console.log(title, description)
+        createImageURL(file)
+     
+        const user = await this.userRepository.findOne({id: owner.userId});
+        console.log(user)
+  
+        if(!user) {
+          return {
+            ok: false,
+            error: "유저를 찾을 수 없습니다.",
+            status: 403
+          }
+        }
+        console.log(file)
+  
+        const newVideoModel = this.videoModelRepository.create({
+          title,
+          description,
+          videoUrl: process.env.SERVER_URL + '/public' + "/" + file.filename,
+          owner: user
+        })
+  
+        console.log(newVideoModel)
+  
+        await this.imageModelRepository.save(newVideoModel);
       }
       catch(error) {
           return {
@@ -81,8 +105,34 @@ export class FileService {
       }
   }
 
-  async getImages(getImageInput: GetFileInput) {
+  async getImages({ownerId}: GetFileInput): Promise<GetFileOutput> {
     try {
+
+      const owner = await this.userRepository.findOne({id: ownerId});
+
+      if(!owner) {
+        return {
+          ok: false,
+          error: "유저를 찾을 수 없습니다.",
+          status: 403
+        }
+      }
+
+      const ownImages = await this.imageModelRepository.find({owner});
+      
+      if(!ownImages) {
+        return {
+          ok: false,
+          error: "이미지를 찾을 수 없습니다.",
+          status: 409
+        }
+      }
+      
+      return {
+        ok: true,
+        status: 200,
+        data: ownImages
+      }
 
     }
     catch(error) {
@@ -94,9 +144,33 @@ export class FileService {
     }
   }
 
-  async getVideos(getVideoInput: GetFileInput) {
+  async getVideos({ownerId}: GetFileInput): Promise<GetFileOutput> {
     try {
+      const owner = await this.userRepository.findOne({id: ownerId});
 
+      if(!owner) {
+        return {
+          ok: false,
+          error: "유저를 찾을 수 없습니다.",
+          status: 403
+        }
+      }
+
+      const ownVideos = await this.videoModelRepository.find({owner});
+      
+      if(!ownVideos) {
+        return {
+          ok: false,
+          error: "비디오를 찾을 수 없습니다.",
+          status: 409
+        }
+      }
+      
+      return {
+        ok: true,
+        status: 200,
+        data: ownVideos
+      }
     }
     catch(error) {
       return {
@@ -106,5 +180,5 @@ export class FileService {
       }
     }
   }
-  
+
 }

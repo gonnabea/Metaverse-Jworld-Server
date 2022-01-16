@@ -8,7 +8,7 @@ import {
 } from './dtos/postFIle.dto';
 import { ImageModel } from './entities/imageFile.entity';
 import { VideoModel } from './entities/videoFIle.entity';
-import { createImageURL } from "../lib/multerOptions";
+import { createFileURL } from "../lib/multerOptions";
 import path from 'path';
 import { GetFileInput, GetFileOutput } from './dtos/getFile.dto';
 
@@ -29,7 +29,7 @@ export class FileService {
   ): Promise<PostFileOutput> {
     try{
       console.log(title, description)
-      createImageURL(file)
+      createFileURL(file)
    
       const user = await this.userRepository.findOne({id: owner.userId});
       console.log(user)
@@ -46,7 +46,7 @@ export class FileService {
       const newImageModel = this.imageModelRepository.create({
         title,
         description,
-        imageUrl: process.env.SERVER_URL + '/public' + "/" + file.filename,
+        imageUrl: process.env.SERVER_URL + "/" + file.filename,
         owner: user
       })
 
@@ -71,7 +71,7 @@ export class FileService {
   ): Promise<PostFileOutput> {
       try{
         console.log(title, description)
-        createImageURL(file)
+        createFileURL(file)
      
         const user = await this.userRepository.findOne({id: owner.userId});
         console.log(user)
@@ -88,13 +88,13 @@ export class FileService {
         const newVideoModel = this.videoModelRepository.create({
           title,
           description,
-          videoUrl: process.env.SERVER_URL + '/public' + "/" + file.filename,
+          videoUrl: process.env.SERVER_URL + "/" + file.filename,
           owner: user
         })
   
         console.log(newVideoModel)
   
-        await this.imageModelRepository.save(newVideoModel);
+        await this.videoModelRepository.save(newVideoModel);
       }
       catch(error) {
           return {
@@ -105,7 +105,7 @@ export class FileService {
       }
   }
 
-  async getImages({ownerId}: GetFileInput): Promise<GetFileOutput> {
+  async getImages(ownerId:number): Promise<GetFileOutput> {
     try {
 
       const owner = await this.userRepository.findOne({id: ownerId});
@@ -127,7 +127,7 @@ export class FileService {
           status: 409
         }
       }
-      
+      console.log(ownImages)
       return {
         ok: true,
         status: 200,
@@ -144,7 +144,7 @@ export class FileService {
     }
   }
 
-  async getVideos({ownerId}: GetFileInput): Promise<GetFileOutput> {
+  async getVideos(ownerId: number): Promise<GetFileOutput> {
     try {
       const owner = await this.userRepository.findOne({id: ownerId});
 
@@ -157,7 +157,7 @@ export class FileService {
       }
 
       const ownVideos = await this.videoModelRepository.find({owner});
-      
+      console.log(ownVideos)
       if(!ownVideos) {
         return {
           ok: false,

@@ -36,9 +36,9 @@ import { join } from 'path';
         DB_DATABASE: Joi.string().required(),
       }),
     }),
-    // ServeStaticModule.forRoot({
-    //   rootPath: join(__dirname, '..', 'public'),
-    // }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'public'),
+    }),
     GraphQLModule.forRoot({
       autoSchemaFile: true,
       debug: true,

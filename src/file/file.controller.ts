@@ -4,6 +4,7 @@ import {
   Get,
   Param,
   Post,
+  Query,
   Request,
   UploadedFile,
   UseGuards,
@@ -42,7 +43,7 @@ export class FileController {
   @Post('video_upload')
   @UseGuards(JwtAuthGuard)
   @ApiConsumes('multipart/form-data')
-  @UseInterceptors(FileInterceptor('file'))
+  @UseInterceptors(FileInterceptor('file', multerOptions))
   async postVideo(
     @UploadedFile() file: Express.Multer.File,
     @Body() postVideoInput: PostFileInput,
@@ -55,12 +56,14 @@ export class FileController {
   }
 
   @Get('image_get')
-  async getImages(@Body() getimageInput: GetFileInput) {
-    return this.fileService.getImages(getimageInput)
+  async getImages(@Query('ownerId') getImageInput: number) {
+    console.log("이미지 인풋", getImageInput)
+    return this.fileService.getImages(getImageInput)
   }
 
   @Get('video_get')
-  async getVideos(@Body() getVideoInput: GetFileInput) {
+  async getVideos(@Query('ownerId') getVideoInput: number) {
+    console.log("비디오 인풋", getVideoInput)
     return this.fileService.getVideos(getVideoInput)
   }
 }

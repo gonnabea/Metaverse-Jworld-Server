@@ -11,6 +11,7 @@ import {
   SaveThreeModelInput,
   SaveThreeModelOutput,
 } from './dtos/saveThreeModel.dto';
+import { UpdateUrlsInput, UpdateUrlsOutput } from './dtos/updateUrls.dto';
 import { ThreeModel } from './entities/threeModel.entity';
 
 @Injectable()
@@ -143,6 +144,45 @@ export class ThreeModelsService {
         status: 520,
         error,
       };
+    }
+  }
+
+  async updateUrls({imageUrl, videoUrl}: UpdateUrlsInput, owner): Promise<UpdateUrlsOutput> {
+    try{
+
+      const user = await this.userRepository.findOne({id: owner.id});
+
+      if(!user) {
+        return {
+          ok: false,
+          error: "유저를 찾을 수 없습니다.",
+          status: 403
+        }
+      }
+
+      const threeModel = await this.threeModelRepository.findOne({owner: user});
+
+      if(!threeModel) {
+        return {
+          ok: false,
+          error: "3D 모델을 찾을 수 없습니다.",
+          status: 403
+        }
+      }
+
+      if(imageUrl)
+      await this.threeModelRepository.update(imageUrl, threeModel)
+
+      if(videoUrl)
+      await this.threeModelRepository.update(videoUrl, threeModel)
+
+    }
+    catch(error) {
+      return {
+        ok: false,
+        error,
+        status: 400
+      }
     }
   }
 }

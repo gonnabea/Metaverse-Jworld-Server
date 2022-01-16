@@ -10,6 +10,7 @@ import {
   SaveThreeModelInput,
   SaveThreeModelOutput,
 } from './dtos/saveThreeModel.dto';
+import { UpdateUrlsInput, UpdateUrlsOutput } from './dtos/updateUrls.dto';
 import { ThreeModelsService } from './three-models.service';
 
 @Resolver()
@@ -30,5 +31,11 @@ export class ThreeModelsResolver {
     @Args('input') getThreeModelsInput: GetThreeModelsInput,
   ): Promise<GetThreeModelsOutput> {
     return await this.threeModelService.getModels(getThreeModelsInput);
+  }
+
+  @Mutation((returns) => UpdateUrlsOutput)
+  @UseGuards(GqlAuthGuard)
+  async updateUrls(@Args('input') updateUrlsInput: UpdateUrlsInput, @CurrentUser() owner): Promise<UpdateUrlsOutput> {
+    return await this.threeModelService.updateUrls(updateUrlsInput, owner)
   }
 }

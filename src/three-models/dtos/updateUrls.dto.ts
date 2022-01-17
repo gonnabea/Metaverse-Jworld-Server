@@ -14,7 +14,9 @@ import {
   
 
   @InputType()
-  export class UpdateUrlsInput extends PickType(ThreeModel, ['imageUrl', 'videoUrl']) {}
+  export class UpdateUrlsInput extends PickType(ThreeModel, ['imageUrl', 'videoUrl', 'name', 'index']) {
+
+  }
   
   @ObjectType()
   export class UpdateUrlsOutput extends CoreOutput {}

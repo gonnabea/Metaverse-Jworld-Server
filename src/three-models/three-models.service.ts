@@ -147,10 +147,11 @@ export class ThreeModelsService {
     }
   }
 
-  async updateUrls({imageUrl, videoUrl}: UpdateUrlsInput, owner): Promise<UpdateUrlsOutput> {
+  //// 쓸모 없어진 API
+  async updateUrls({imageUrl, videoUrl, name, index}: UpdateUrlsInput, owner): Promise<UpdateUrlsOutput> {
     try{
-
-      const user = await this.userRepository.findOne({id: owner.id});
+      console.log(owner)
+      const user = await this.userRepository.findOne({id: owner.userId});
 
       if(!user) {
         return {
@@ -160,7 +161,10 @@ export class ThreeModelsService {
         }
       }
 
-      const threeModel = await this.threeModelRepository.findOne({owner: user});
+      // 모델 이름과 ID로 업데이트 요청한 모델 지정
+      const threeModel = await this.threeModelRepository.findOne({name, index});
+
+      console.log(threeModel)
 
       if(!threeModel) {
         return {
@@ -171,10 +175,21 @@ export class ThreeModelsService {
       }
 
       if(imageUrl)
-      await this.threeModelRepository.update(imageUrl, threeModel)
+      await this.threeModelRepository.save({
+        ...threeModel,
+        imageUrl
+      })
 
       if(videoUrl)
-      await this.threeModelRepository.update(videoUrl, threeModel)
+      await this.threeModelRepository.save({
+        ...threeModel,
+        videoUrl
+      })
+
+      return {
+        ok: true,
+        status: 200
+      }
 
     }
     catch(error) {

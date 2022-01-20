@@ -9,6 +9,7 @@ export interface wsClient {
   connectedRoomId: string;
   nickname: string;
   id: string;
+  socketId: string
 }
 
 export interface wsRoom {

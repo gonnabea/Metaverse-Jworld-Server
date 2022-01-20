@@ -50,8 +50,7 @@ export class ThreeModelsService {
         };
       }
 
-      console.log(user);
-      console.log(miniHompi);
+
 
       const originalModels = await this.threeModelRepository.find({
         miniHompi,
@@ -128,11 +127,7 @@ export class ThreeModelsService {
         };
       }
 
-      // models.map( async model => {
-      //     const owner = await this.userRepository.findOne({ id: model.owner.id })
 
-      // })
-      console.log(models);
       return {
         ok: true,
         status: 200,
@@ -150,7 +145,7 @@ export class ThreeModelsService {
   //// 쓸모 없어진 API
   async updateUrls({imageUrl, videoUrl, name, index}: UpdateUrlsInput, owner): Promise<UpdateUrlsOutput> {
     try{
-      console.log(owner)
+  
       const user = await this.userRepository.findOne({id: owner.userId});
 
       if(!user) {
@@ -164,7 +159,7 @@ export class ThreeModelsService {
       // 모델 이름과 ID로 업데이트 요청한 모델 지정
       const threeModel = await this.threeModelRepository.findOne({name, index});
 
-      console.log(threeModel)
+
 
       if(!threeModel) {
         return {

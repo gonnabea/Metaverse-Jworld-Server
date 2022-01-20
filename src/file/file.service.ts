@@ -28,11 +28,11 @@ export class FileService {
     owner
   ): Promise<PostFileOutput> {
     try{
-      console.log(title, description)
+    
       createFileURL(file)
    
       const user = await this.userRepository.findOne({id: owner.userId});
-      console.log(user)
+     
 
       if(!user) {
         return {
@@ -41,7 +41,7 @@ export class FileService {
           status: 403
         }
       }
-      console.log(file)
+      
 
       const newImageModel = this.imageModelRepository.create({
         title,
@@ -50,7 +50,7 @@ export class FileService {
         owner: user
       })
 
-      console.log(newImageModel)
+    
 
       await this.imageModelRepository.save(newImageModel);
 
@@ -70,11 +70,11 @@ export class FileService {
     owner
   ): Promise<PostFileOutput> {
       try{
-        console.log(title, description)
+  
         createFileURL(file)
      
         const user = await this.userRepository.findOne({id: owner.userId});
-        console.log(user)
+     
   
         if(!user) {
           return {
@@ -83,7 +83,7 @@ export class FileService {
             status: 403
           }
         }
-        console.log(file)
+      
   
         const newVideoModel = this.videoModelRepository.create({
           title,
@@ -91,8 +91,7 @@ export class FileService {
           videoUrl: process.env.SERVER_URL + "/" + file.filename,
           owner: user
         })
-  
-        console.log(newVideoModel)
+
   
         await this.videoModelRepository.save(newVideoModel);
       }
@@ -127,7 +126,7 @@ export class FileService {
           status: 409
         }
       }
-      console.log(ownImages)
+   
       return {
         ok: true,
         status: 200,
@@ -157,7 +156,7 @@ export class FileService {
       }
 
       const ownVideos = await this.videoModelRepository.find({owner});
-      console.log(ownVideos)
+
       if(!ownVideos) {
         return {
           ok: false,

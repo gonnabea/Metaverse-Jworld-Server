@@ -37,6 +37,7 @@ export class LobbyEventsGateway {
       nickname,
       connectedRoomId: null,
       id: userId,
+      socketId: client.id
     };
 
     client.data.userId = userId;
@@ -71,12 +72,15 @@ export class LobbyEventsGateway {
     @MessageBody() { roomName, nickname, maxPeopleNum, userId = client.id },
   ) {
     try {
+
+      const user = LobbyEventsGateway.wsClients.find(client => client.id === userId)
+
       const newRoom: wsRoom = {
         roomName,
         id: uuidv4(),
         creator: nickname,
         createdAt: new Date().toLocaleString(),
-        userList: [userId],
+        userList: [user],
         maxPeopleNum,
       };
 
@@ -121,10 +125,11 @@ export class LobbyEventsGateway {
     try {
       client.data.userId = userId;
       client.data.connectedRoomId = roomId;
+      const user = LobbyEventsGateway.wsClients.find(client => client.id === userId)
       // 방의 유저 목록 업데이트
       LobbyEventsGateway.wsRooms.map((room: wsRoom) => {
         if (room.id === roomId) {
-          room.userList.push(userId);
+          room.userList.push(user);
         }
       });
 
@@ -134,7 +139,7 @@ export class LobbyEventsGateway {
           clientObj.connectedRoomId = roomId;
         }
       });
-
+      client.join(roomId)
       client.broadcast.emit('reloadLobby', {
         activeRooms: LobbyEventsGateway.wsRooms,
       });
@@ -161,7 +166,7 @@ export class LobbyEventsGateway {
       );
 
       // 해당 유저를 뺀 나머지를 유저리스트로 설정
-      room.userList = room.userList.filter((id) => id !== userId);
+      room.userList = room.userList.filter((user) => user.id !== userId);
       console.log(room.userList);
 
       // 실제 객체에 적용
@@ -186,6 +191,26 @@ export class LobbyEventsGateway {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  @SubscribeMessage('avatar-move')
+  async handleAvatarMove(
+    @ConnectedSocket() client: Socket,
+    @MessageBody() {
+      roomId = client.data.connectedRoomId, userId = client.data.userId, position = { x:0, y:0, z:0 }, rotateZ = 0
+    }
+      
+    ) {
+      try {
+
+       
+        // client.send('avatar-move', "move")
+        // client.to(roomId).emit('avatar-move', {roomId, userId, position})
+        client.broadcast.emit('avatar-move', {roomId, userId, position, rotateZ})
+      }
+      catch(error) {
+        console.log(error)
+      }
   }
 
   async handleDisconnect(@ConnectedSocket() client: Socket) {

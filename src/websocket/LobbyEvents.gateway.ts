@@ -143,6 +143,8 @@ export class LobbyEventsGateway {
       client.broadcast.emit('reloadLobby', {
         activeRooms: LobbyEventsGateway.wsRooms,
       });
+      client.broadcast.emit("join-room", {roomId, userId})
+      
     } catch (error) {
       console.log(error);
     }
@@ -166,15 +168,15 @@ export class LobbyEventsGateway {
       );
 
       // 해당 유저를 뺀 나머지를 유저리스트로 설정
+      if(room)
       room.userList = room.userList.filter((user) => user.id !== userId);
-      console.log(room.userList);
+      
 
       // 실제 객체에 적용
       LobbyEventsGateway.wsRooms.find(
         (room: wsRoom) => room.id === roomId,
       ).userList = room.userList;
 
-      console.log(LobbyEventsGateway.wsRooms);
 
       // 만약 남은 유저가 없을 경우 방 삭제
       if (room.userList.length === 0) {
@@ -188,6 +190,8 @@ export class LobbyEventsGateway {
       client.broadcast.emit('reloadLobby', {
         activeRooms: LobbyEventsGateway.wsRooms,
       });
+
+      client.broadcast.emit('leave-room', {userId})
     } catch (error) {
       console.log(error);
     }

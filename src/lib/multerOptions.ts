@@ -26,7 +26,6 @@ export const multerOptions = {
     },
 
     filename: (request, file, callback) => {
-      console.log("asdddddddddddddddddddddddddddddddddddddddd")
       callback(null, uuidRandom(file));
     }
   })

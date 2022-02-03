@@ -20,7 +20,7 @@ const options = {
   transports: ['websocket']
 };
 
-@WebSocketGateway(4001, options)
+@WebSocketGateway(options)
 export class LobbyEventsGateway {
   @WebSocketServer()
   server: wsServer;

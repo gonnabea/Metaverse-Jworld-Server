@@ -3,6 +3,24 @@
 - 메타버스 SNS 서버사이드 만들기
 - 싸이월드 모티브
 
+## Repository
+
+- client: https://github.com/gonnabea/Metaverse-Jworld-Client
+- server: https://github.com/gonnabea/Metaverse-Jworld-Server
+
+## 프로젝트 동기 / 설명
+
+웹 위에서 구동되는 메타버스 컨셉의 프로젝트입니다.
+유저가 간편하게 웹 URL을 통해,
+3D 공간에 접근하여 마치 3D 온라인 게임 처럼 타 유저와 만나 채팅하고, 
+방꾸미기를 할 수 있으며, 전시 작품을 등록, 관람하는 등의
+인터랙티브한 경험을 할 수 있는 웹을 만들면 정말 재밌겠다는 생각을 했습니다
+
+## 개발 기간
+
+11월 ~ 1월: 초기 출시
+2월 ~ : 현재 진행형, 1차 업데이트 예정 
+
 ### 서버사이드 기술스택
 
 - [x] Nest.js

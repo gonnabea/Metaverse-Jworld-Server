@@ -3,10 +3,17 @@
 - 메타버스 SNS 서버사이드 만들기
 - 싸이월드 모티브
 
+## Notice
+- 현재 Oracle Cloud Free Tier의 서버 스펙이 부족하여 서비스 배포를 하지 않고 있는 상태입니다
+- 추후 서버 구입 후 서비스 운영 예정입니다.
+
 ## Repository
 
 - client: https://github.com/gonnabea/Metaverse-Jworld-Client
 - server: https://github.com/gonnabea/Metaverse-Jworld-Server
+
+## 기여도
+- 개인 프로젝트 (100%)
 
 ## 프로젝트 동기 / 설명
 
@@ -19,11 +26,12 @@
 ## 개발 기간
 
 11월 ~ 1월: 초기 출시
+
 2월 ~ : 현재 진행형, 1차 업데이트 예정 
 
 ### 서버사이드 기술스택
 
-- [x] Nest.js
+- [x] Nest.js (Node.js)
 - [x] TypeScript
 - [x] GraphQL
 - [x] REST API (For Files)

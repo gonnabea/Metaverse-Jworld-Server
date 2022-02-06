@@ -1,7 +1,4 @@
-# JWorld-Metaverse
-
-- 메타버스 SNS 서버사이드 만들기
-- 싸이월드 모티브
+# Jetaverse-Server
 
 ## Notice
 - 현재 Oracle Cloud Free Tier의 서버 스펙이 부족하여 서비스 배포를 하지 않고 있는 상태입니다
@@ -32,7 +29,7 @@
 
 2월 ~ : 현재 진행형, 1차 업데이트 예정 
 
-### 서버사이드 기술스택
+## 서버사이드 기술스택
 
 - [x] Nest.js (Node.js)
 - [x] TypeScript
@@ -46,6 +43,14 @@
 - [x] Docker
 - [x] Ubuntu SSH (Oracle Cloud Free Tier)
 - [x] Nginx
+
+## 프로젝트 구조도
+
+![프로젝트 구조도](https://user-images.githubusercontent.com/48288590/152673864-e99996b6-8b69-4ecd-ae18-ec71142683f3.jpg)
+
+### ERD (데이터 구조)
+
+- https://www.erdcloud.com/d/6CBPbhda2jyTXBWQt
 
 ## 기능
 
@@ -119,8 +124,3 @@
 
 - [ ] 미니홈피 추천 수에 따른 화폐 지급
 - [ ] 축구 등 미니게임 승리 시 화폐 지급
-
-
-### ERD (데이터 구조)
-
-- https://www.erdcloud.com/d/6CBPbhda2jyTXBWQt

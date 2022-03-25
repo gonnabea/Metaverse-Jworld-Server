@@ -46,7 +46,7 @@ export class FileService {
       const newImageModel = this.imageModelRepository.create({
         title,
         description,
-        imageUrl: process.env.SERVER_URL + "/" + file.filename,
+        imageUrl: "http://" + process.env.SERVER_URL + ":4000" + "/" + file.filename,
         owner: user
       })
 
@@ -88,7 +88,7 @@ export class FileService {
         const newVideoModel = this.videoModelRepository.create({
           title,
           description,
-          videoUrl: process.env.SERVER_URL + "/" + file.filename,
+          videoUrl: "http://" + process.env.SERVER_URL + ":4000" + "/" + file.filename,
           owner: user
         })
 

@@ -195,7 +195,7 @@ export class LobbyEventsGateway {
 
       client.data.connectedRoomId = null;
 
-      client.broadcast.emit('reloadLobby', {
+      client.broadcast.emit('reload-lobby', {
         activeRooms: LobbyEventsGateway.wsRooms,
       });
 
@@ -214,7 +214,6 @@ export class LobbyEventsGateway {
       
     ) {
       try {
-
         // client.to(roomId).emit('avatar-move', {roomId, userId, position, rotateZ})
         client.broadcast.emit('avatar-move', {roomId, userId, position, rotateZ})
       }

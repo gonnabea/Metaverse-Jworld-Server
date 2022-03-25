@@ -1,11 +1,42 @@
-# JWorld-Metaverse
+# Jetaverse-Server
 
-- 메타버스 SNS 서버사이드 만들기
-- 싸이월드 모티브
+## Notice
+- 현재 Oracle Cloud Free Tier의 서버 스펙이 부족하여 서비스 배포를 하지 않고 있는 상태입니다
+- 추후 서버 구입 후 서비스 운영 예정입니다.
 
-### 서버사이드 기술스택
+## 프로젝트 소개 영상
+- https://www.youtube.com/watch?v=clWEnxmigkQ&list=PLEz2cL2r60W_SZVhVsx768-vo7D7Ovwqb&index=1
 
-- [x] Nest.js
+## Repository
+
+- client: https://github.com/gonnabea/Metaverse-Jworld-Client
+- server: https://github.com/gonnabea/Metaverse-Jworld-Server
+
+## 기여도
+
+- 개인 프로젝트 (100%)
+
+## 프로젝트 동기 / 설명
+
+웹 위에서 구동되는 메타버스 컨셉의 프로젝트입니다.
+
+유저가 간편하게 웹 URL을 통해,
+
+3D 공간에 접근하여 마치 3D 온라인 게임 처럼 타 유저와 만나 채팅하고, 
+
+방꾸미기를 할 수 있으며, 전시 작품을 등록, 관람하는 등의
+
+인터랙티브한 경험을 할 수 있는 웹을 만들면 정말 재밌겠다는 생각을 했습니다
+
+## 개발 기간
+
+11월 ~ 1월: 초기 출시
+
+2월 ~ : 현재 진행형, 1차 업데이트 예정 
+
+## 서버사이드 기술스택
+
+- [x] Nest.js (Node.js)
 - [x] TypeScript
 - [x] GraphQL
 - [x] REST API (For Files)
@@ -17,6 +48,14 @@
 - [x] Docker
 - [x] Ubuntu SSH (Oracle Cloud Free Tier)
 - [x] Nginx
+
+## 프로젝트 구조도
+
+![프로젝트 구조도](https://user-images.githubusercontent.com/48288590/152673864-e99996b6-8b69-4ecd-ae18-ec71142683f3.jpg)
+
+### ERD (데이터 구조)
+
+- https://www.erdcloud.com/d/6CBPbhda2jyTXBWQt
 
 ## 기능
 
@@ -90,8 +129,3 @@
 
 - [ ] 미니홈피 추천 수에 따른 화폐 지급
 - [ ] 축구 등 미니게임 승리 시 화폐 지급
-
-
-### ERD (데이터 구조)
-
-- https://www.erdcloud.com/d/6CBPbhda2jyTXBWQt

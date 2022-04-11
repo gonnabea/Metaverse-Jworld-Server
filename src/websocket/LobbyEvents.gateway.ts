@@ -9,6 +9,7 @@ import { wsClient, wsRoom } from 'src/websocket/types/wsTypes';
 import { Server as wsServer, WebSocket } from 'ws';
 import { v4 as uuidv4 } from 'uuid';
 import { Socket } from 'socket.io';
+import { ConsoleLogger } from '@nestjs/common';
 
 const options = {
   cors: {
@@ -79,7 +80,7 @@ export class LobbyEventsGateway {
     try {
 
       const user = LobbyEventsGateway.wsClients.find(client => client.id === userId)
-
+      
       const newRoom: wsRoom = {
         roomName,
         id: uuidv4(),
@@ -92,8 +93,8 @@ export class LobbyEventsGateway {
       client.data.userId = userId;
       client.data.connectedRoomId = newRoom.id;
 
-      client.join(newRoom.id);
-
+      client.join(newRoom.id); // 실제 소켓룸에 접속
+  
       // 유저의 현재 접속중인 방 업데이트해주기
       LobbyEventsGateway.wsClients.map((clientObj) => {
         clientObj.connectedRoomId = newRoom.id;
@@ -108,7 +109,7 @@ export class LobbyEventsGateway {
       });
 
       // 타 유저 로비 화면 업데이트 위함
-      client.broadcast.emit('reload-lobby', {
+      client.to('lobby').emit('reload-lobby', {
         activeRooms: LobbyEventsGateway.wsRooms,
       });
     } catch (error) {
@@ -216,8 +217,9 @@ export class LobbyEventsGateway {
       
     ) {
       try {
+        
         // client.to(roomId).emit('avatar-move', {roomId, userId, position, rotateZ})
-        client.broadcast.emit('avatar-move', {roomId, userId, position, rotateZ})
+        client.to(roomId).emit('avatar-move', {roomId, userId, position, rotateZ})
       }
       catch(error) {
         console.log(error)
@@ -233,6 +235,7 @@ export class LobbyEventsGateway {
     ) {
       try {
         console.log(LobbyEventsGateway.wsRooms)
+        client.join(roomId)
         const userList = LobbyEventsGateway.wsRooms.map(room => {
           if(room.id === roomId) {
             return room.userList

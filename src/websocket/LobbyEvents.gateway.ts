@@ -35,6 +35,8 @@ export class LobbyEventsGateway {
     // 만약 비회원 로그인 시 웹소켓 랜덤 고유 id를 부여
     @MessageBody() { nickname, userId = client.id },
   ) {
+    client.join('lobby');
+    client.to('lobby').emit("enter-lobby", `${nickname}님이 로비에 입장하셨습니다.`)
     const newClient = {
       nickname,
       connectedRoomId: null,
@@ -49,7 +51,7 @@ export class LobbyEventsGateway {
       LobbyEventsGateway.wsClients.push(newClient);
 
 
-    client.emit('enter-lobby', {
+    client.to('lobby').emit('enter-lobby', {
       client: client.id, // 새로 접속한 클라이언트 id 전송
       activeRooms: LobbyEventsGateway.wsRooms, // 현재 생성된 방 목록 전송
     });

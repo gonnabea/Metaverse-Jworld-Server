@@ -13,7 +13,7 @@ import { ConsoleLogger } from '@nestjs/common';
 
 const options = {
   cors: {
-    origin: ['http://localhost:3000', 'ws://localhost:3000', "http://152.70.232.36:3000", 'ws://152.70.232.36:4001', "https://jetaverse.site" ],
+    origin: ['http://localhost:3000', 'ws://localhost:3000', "http://146.56.145.39:3000", 'ws://146.56.145.39:4001', "https://jetaverse.site" ],
     methods: ['GET', 'POST'],
     credentials: true,
   },

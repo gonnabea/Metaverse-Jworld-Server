@@ -58,6 +58,14 @@ export class LobbyEventsGateway {
     });
   }
 
+  // 유저가 최초 로비 진입 시 활성화 스트림월드 목록 전송
+  @SubscribeMessage('get-worlds')
+  getStreamWorlds(@ConnectedSocket() client: Socket,) {
+    client.emit('get-worlds', {
+      activeRooms: LobbyEventsGateway.wsRooms
+    })
+  }
+
   // 전체 채팅
   @SubscribeMessage('chat')
   handleBroadcast(@ConnectedSocket() client: Socket, @MessageBody() msg) {

@@ -159,8 +159,13 @@ export class LobbyEventsGateway {
         activeRooms: LobbyEventsGateway.wsRooms,
       });
 
+      console.log(room.userList)
+
+      const userIndex = room.userList.length - 1;
+      
+
       // 룸 내에 있는 유저들에게 새로운 유저 입장했다고 알리기
-      client.broadcast.emit("join-room", {roomId, userId, userList: room.userList})
+      client.broadcast.emit("join-room", {roomId, userId: userIndex, userList: room.userList})
       
     } catch (error) {
       console.log(error);
@@ -220,14 +225,16 @@ export class LobbyEventsGateway {
   async handleAvatarMove(
     @ConnectedSocket() client: Socket,
     @MessageBody() {
-      roomId = client.data.connectedRoomId, userId = client.data.userId, position = { x:0, y:0, z:0 }, rotateZ = 0
+      roomId = client.data.connectedRoomId, userIndex, position = { x:0, y:0, z:0 }, rotateZ = 0
     }
       
     ) {
       try {
-        
+
+      
+        console.log("userIndex: ", userIndex)
         // client.to(roomId).emit('avatar-move', {roomId, userId, position, rotateZ})
-        client.to(roomId).emit('avatar-move', {roomId, userId, position, rotateZ})
+        client.to(roomId).emit('avatar-move', {roomId, userIndex, position, rotateZ})
       }
       catch(error) {
         console.log(error)
@@ -249,7 +256,8 @@ export class LobbyEventsGateway {
             return room.userList
           }
         })
-        client.emit('get-user-list', { userList: userList[0] })
+        console.log("userList: ", userList[0])
+       return userList[0]
       }
       catch(error) {
         console.log(error)

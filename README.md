@@ -48,6 +48,7 @@
 - [x] Docker
 - [x] Ubuntu SSH (Oracle Cloud Free Tier)
 - [x] Nginx
+- [x] PM2
 
 ## 프로젝트 구조도
 

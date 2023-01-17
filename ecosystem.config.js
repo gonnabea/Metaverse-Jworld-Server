@@ -1,7 +1,7 @@
 module.exports = {
   apps : [{
     script: './dist/main.js',
-    instances: 4,
+    instances: 8,
     name: 'jetaverse-api',
     exec_mode : "cluster",
   },],
